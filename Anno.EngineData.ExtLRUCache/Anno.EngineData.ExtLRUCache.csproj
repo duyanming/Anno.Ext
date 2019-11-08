@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Du yanming</Authors>
+    <Company>Du yanming</Company>
+    <Product>Anno.EngineData.Cache</Product>
+    <Description>Cache</Description>
+    <PackageProjectUrl>https://github.com/duyanming/AnnoDemo</PackageProjectUrl>
+    <PackageId>Anno.EngineData.Cache</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Anno.EngineData" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anno.LRUCache\Anno.LRUCache.csproj" />
+  </ItemGroup>
+
+</Project>
