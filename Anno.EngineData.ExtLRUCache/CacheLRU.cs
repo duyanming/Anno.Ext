@@ -14,6 +14,10 @@ namespace Anno.EngineData
         public bool IsGetAndResetTime { get; set; } = true;
         public int Capacity { get; set; } = 255;
         public double ExpireSeconds { get; set; } = 10 * 60;
+        /// <summary>
+        /// 是否滑动过期
+        /// </summary>
+        public bool SlidingExpiration { get; set; } = true;
         LRUCache<int, ActionResult> cacheLRU;
         public override void RemoveCache(int key)
         {
@@ -27,7 +31,7 @@ namespace Anno.EngineData
 
         public override bool TryGetCache(int key, out ActionResult actionResult)
         {
-            return cacheLRU.TryGet(key, out actionResult);
+            return cacheLRU.TryGet(key, out actionResult,SlidingExpiration);
         }
     }
 }

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Test", "Anno.Test\Anno
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.EngineData.ExtLRUCache", "Anno.EngineData.ExtLRUCache\Anno.EngineData.ExtLRUCache.csproj", "{CA3B9F83-C1B9-40CD-911D-2533603222EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryCachingTest", "MemoryCachingTest\MemoryCachingTest.csproj", "{13E10092-9789-42DC-B2A5-324B56AB8659}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CA3B9F83-C1B9-40CD-911D-2533603222EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA3B9F83-C1B9-40CD-911D-2533603222EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA3B9F83-C1B9-40CD-911D-2533603222EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13E10092-9789-42DC-B2A5-324B56AB8659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13E10092-9789-42DC-B2A5-324B56AB8659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13E10092-9789-42DC-B2A5-324B56AB8659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13E10092-9789-42DC-B2A5-324B56AB8659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

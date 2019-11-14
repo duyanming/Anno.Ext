@@ -221,20 +221,31 @@ namespace Anno.LRUCache
         {
             Task.Factory.StartNew(() =>
             {
-                while (cancelToken.Token.IsCancellationRequested == false)
+            Expire:
+                try
                 {
-                    var keys = _keyLastVisitTimeDictionary.Keys.ToList();
-                    var now = DateTime.Now;
-                    foreach (var key in keys)
+                    while (cancelToken.Token.IsCancellationRequested == false)
                     {
-                        _keyLastVisitTimeDictionary.TryGetValue(key, out DateTime dateTime);
-                        if (dateTime != null && (now - dateTime).TotalSeconds > _seconds)
+                        _locker.EnterReadLock();
+                        var keys = _keyLastVisitTimeDictionary.Keys.ToList();
+                        _locker.ExitReadLock();
+                        var now = DateTime.Now;
+                        foreach (var key in keys)
                         {
-                            Remove(key);
+                            _keyLastVisitTimeDictionary.TryGetValue(key, out DateTime dateTime);
+                            if (dateTime != null && (now - dateTime).TotalSeconds > _seconds)
+                            {
+                                Remove(key);
 
+                            }
                         }
+                        Thread.Sleep(5000);
                     }
-                    Thread.Sleep(5000);
+                }
+                catch
+                {
+                    _locker.ExitReadLock();
+                    goto Expire;
                 }
             }, cancelToken.Token);
         }
