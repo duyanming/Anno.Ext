@@ -11,7 +11,6 @@ namespace Anno.EngineData
         {
             cacheLRU = new LRUCache<int, ActionResult>(Capacity, ExpireSeconds);
         }
-        public bool IsGetAndResetTime { get; set; } = true;
         public int Capacity { get; set; } = 255;
         public double ExpireSeconds { get; set; } = 10 * 60;
         /// <summary>
