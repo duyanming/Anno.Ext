@@ -9,6 +9,7 @@
     <Description>Cache</Description>
     <PackageProjectUrl>https://github.com/duyanming/AnnoDemo</PackageProjectUrl>
     <PackageId>Anno.LRUCache</PackageId>
+    <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
     <Version>1.0.1.1</Version>
   </PropertyGroup>
 
