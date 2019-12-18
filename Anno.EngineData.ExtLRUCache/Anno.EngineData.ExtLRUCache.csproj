@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/duyanming/AnnoDemo</PackageProjectUrl>
     <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
     <PackageId>Anno.EngineData.Cache</PackageId>
-    <Version>1.0.1.4</Version>
+    <Version>1.0.1.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

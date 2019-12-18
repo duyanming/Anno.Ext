@@ -11,12 +11,35 @@ namespace Anno.EngineData
         {
             cacheLRU = new LRUCache<int, ActionResult>(Capacity, ExpireSeconds);
         }
-        public int Capacity { get; set; } = 255;
-        public double ExpireSeconds { get; set; } = 10 * 60;
+        public CacheLRU(int capacity)
+        {
+            this.Capacity = capacity;
+            cacheLRU = new LRUCache<int, ActionResult>(Capacity, ExpireSeconds);
+        }
+        public CacheLRU(double expireSeconds):this()
+        {
+            this.ExpireSeconds = expireSeconds;
+            cacheLRU = new LRUCache<int, ActionResult>(Capacity, ExpireSeconds);
+        }
+        public CacheLRU(int capacity, double expireSeconds)
+        {
+            this.Capacity = capacity;
+            this.ExpireSeconds = expireSeconds;
+            cacheLRU = new LRUCache<int, ActionResult>(Capacity, ExpireSeconds);
+        }
+        public CacheLRU(int capacity, double expireSeconds,bool slidingExpiration)
+        {
+            this.Capacity = capacity;
+            this.ExpireSeconds = expireSeconds;
+            this.SlidingExpiration = slidingExpiration;
+            cacheLRU = new LRUCache<int, ActionResult>(Capacity, ExpireSeconds);
+        }
+        private int Capacity { get; set; } = 255;
+        private double ExpireSeconds { get; set; } = 10 * 60;
         /// <summary>
         /// 是否滑动过期
         /// </summary>
-        public bool SlidingExpiration { get; set; } = true;
+        private bool SlidingExpiration { get; set; } = true;
         LRUCache<int, ActionResult> cacheLRU;
         public override void RemoveCache(int key)
         {

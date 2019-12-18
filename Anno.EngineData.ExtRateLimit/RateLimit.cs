@@ -1,43 +1,32 @@
 ﻿using System;
 using Anno.RateLimit;
 
-namespace Anno.EngineData
+namespace Anno.EngineData.Limit
 {
     using Anno.EngineData.Cache;
     public class RateLimit : CacheMiddlewareAttribute
     {
-        public TimeSpan LimitTimeSpan { get; set; } = TimeSpan.FromSeconds(1);
-        public LimitingType LimitType { get; set; } = LimitingType.TokenBucket;
-        public int MaxQps { get; set; } = 2000;
-        private int limitSize;
-        public int LimitSize
-        {
-            get
-            {
-                if (limitSize <= 0)
-                {
-                    limitSize = MaxQps;
-                }
-                return limitSize;
-            }
-            set
-            {
-                if (value > 0)
-                {
-                    limitSize = value;
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException(nameof(LimitSize));
-                }
-            }
-        }
+        private int TimeInterval { get; set; } = 1;
+        private LimitingType LimitType { get; set; } = LimitingType.TokenBucket;
+        private int MaxQps { get; set; } = 2000;
+        private int LimitSize;
         ILimitingService limit;
         public RateLimit()
         {
-            limit = LimitingFactory.Build(LimitTimeSpan, LimitType, MaxQps, limitSize);
+            limit = LimitingFactory.Build(TimeSpan.FromSeconds(TimeInterval), LimitType, MaxQps, LimitSize);
         }
-
+        public RateLimit(LimitingType limitType, int TimeIntervalSeconds, int maxQps,int limitSize)
+        {
+            this.TimeInterval = TimeIntervalSeconds;
+            this.LimitType = limitType;
+            this.MaxQps = maxQps;
+            this.LimitSize = limitSize;
+            limit = LimitingFactory.Build(TimeSpan.FromSeconds(TimeInterval), LimitType, MaxQps, LimitSize);
+        }
+        public RateLimit(LimitingType limitType) : this()
+        {
+            this.LimitType = limitType;
+        }
         public override void RemoveCache(int key)
         {
             
