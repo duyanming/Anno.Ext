@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <DeveloperBuildCoreTfms>netcoreapp3.0</DeveloperBuildCoreTfms>
+      <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.1.4</Version>
+    <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
+  </PropertyGroup>
+</Project>
