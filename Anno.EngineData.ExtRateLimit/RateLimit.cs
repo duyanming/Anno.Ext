@@ -15,9 +15,9 @@ namespace Anno.EngineData.Limit
         {
             limit = LimitingFactory.Build(TimeSpan.FromSeconds(TimeInterval), LimitType, MaxQps, LimitSize);
         }
-        public RateLimit(LimitingType limitType, int TimeIntervalSeconds, int maxQps,int limitSize)
+        public RateLimit(LimitingType limitType, int timeIntervalSeconds, int maxQps,int limitSize)
         {
-            this.TimeInterval = TimeIntervalSeconds;
+            this.TimeInterval = timeIntervalSeconds;
             this.LimitType = limitType;
             this.MaxQps = maxQps;
             this.LimitSize = limitSize;
