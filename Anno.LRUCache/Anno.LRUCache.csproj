@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Du yanming</Authors>
     <Company>Du yanming</Company>
     <Product>Anno.LRUCache</Product>
     <Description>Cache</Description>
-    <PackageProjectUrl>https://github.com/duyanming/AnnoDemo</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/duyanming/Anno.LRUCache</PackageProjectUrl>
     <PackageId>Anno.LRUCache</PackageId>
     <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
-    <Version>1.0.1.1</Version>
+    <Version>1.1.0.0</Version>
   </PropertyGroup>
 
 </Project>
