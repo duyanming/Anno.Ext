@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Du yanming</Authors>
+    <Company>Du yanming</Company>
+    <Product>Anno.Rpc.ExtClient</Product>
+    <Description>Cache</Description>
+    <PackageProjectUrl>https://github.com/duyanming/Anno.LRUCache</PackageProjectUrl>
+    <PackageId>Anno.Rpc.ExtClient</PackageId>
+    <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
+    <RootNamespace>Anno.Rpc.Client</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Anno.Rpc.Client" Version="1.0.1.9" />
+    <PackageReference Include="DotNetCore.Natasha.CSharp.All" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

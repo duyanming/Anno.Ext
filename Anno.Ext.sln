@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builder", "Builder", "{F720
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.EngineData.ExtRateLimit", "Anno.EngineData.ExtRateLimit\Anno.EngineData.ExtRateLimit.csproj", "{F520AF3B-D104-4F8B-9E53-9A4A63F58EBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.Rpc.ExtClient", "Anno.Rpc.ExtClient\Anno.Rpc.ExtClient.csproj", "{72514439-CF33-468B-97C8-67FAE37B675A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{F520AF3B-D104-4F8B-9E53-9A4A63F58EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F520AF3B-D104-4F8B-9E53-9A4A63F58EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F520AF3B-D104-4F8B-9E53-9A4A63F58EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72514439-CF33-468B-97C8-67FAE37B675A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72514439-CF33-468B-97C8-67FAE37B675A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72514439-CF33-468B-97C8-67FAE37B675A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72514439-CF33-468B-97C8-67FAE37B675A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
