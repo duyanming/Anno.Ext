@@ -55,16 +55,16 @@ namespace Anno.Rpc.Client.Ext
             return taskServiceImp();
         }
         /// <summary>
-        /// 初始化
+        /// 初始化比较耗时
         /// </summary>
         public static void Init()
         {
             if (!isInit)
             {
-                //NatashaInitializer.Initialize();
-                NatashaComponentRegister.RegistDomain<NatashaAssemblyDomain>();
-                NatashaComponentRegister.RegistCompiler<NatashaCSharpCompiler>();
-                NatashaComponentRegister.RegistSyntax<NatashaCSharpSyntax>();
+                NatashaInitializer.InitializeAndPreheating();
+                //NatashaComponentRegister.RegistDomain<NatashaAssemblyDomain>();
+                //NatashaComponentRegister.RegistCompiler<NatashaCSharpCompiler>();
+                //NatashaComponentRegister.RegistSyntax<NatashaCSharpSyntax>();
                 isInit = true;
             }
         }

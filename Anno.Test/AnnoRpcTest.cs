@@ -17,10 +17,10 @@ namespace Anno.Test
         public static void Handle()
         {
             Init();
+            var taskService = AnnoProxyBuilder.GetService<ITaskService>();
+            var taskServiceType = AnnoProxyBuilder.GetServiceType<ITaskService>();
             for (int i = 0; i < 100; i++)
             {
-                var taskService = AnnoProxyBuilder.GetService<ITaskService>();
-                var taskServiceType = AnnoProxyBuilder.GetServiceType<ITaskService>();
                 var rlt = taskService.SayHi("Du Yan Ming", new TaskDto() { Name = "Anno", Age = 18 });
 
                 Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(rlt));

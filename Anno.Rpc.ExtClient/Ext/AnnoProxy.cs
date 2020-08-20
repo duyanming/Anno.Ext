@@ -352,7 +352,6 @@ namespace Anno.Rpc.Client.Ext
                 _fieldBuilder.Append(ProxyBody);
                 _builder.Body(_fieldBuilder.ToString()).GetType();
 
-
                 var action = NDelegate.UseCompiler(_builder.AssemblyBuilder).Action<List<(string memberName, Delegate @delegate, string typeScript)>>($@"
                     {_builder.NameScript}.SetDelegate(obj);
                 ", "Anno.Proxy");
