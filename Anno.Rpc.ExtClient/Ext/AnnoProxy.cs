@@ -16,8 +16,8 @@ namespace Anno.Rpc.Client.Ext
 {
     public class AnnoProxy
     {
-        public const string NoNeedWriting = "NW1000-NoNeedToWrite";
-        internal readonly NClass _builder;
+        public const string NoNeedWriting = "Mark-NoNeedToWrite";
+        private readonly NClass _builder;
         private readonly ConcurrentDictionary<string, MethodInfo> _methodMapping;
         private readonly ConcurrentDictionary<Delegate, string> _staticDelegateOrderScriptMapping;
         private readonly List<(string memberName, Delegate @delegate, string typeScript)> _staticNameDelegateMapping;
@@ -270,13 +270,11 @@ namespace Anno.Rpc.Client.Ext
 
 
 
-        private AnnoProxy Complie()
+        private AnnoProxy Complie<TInterface>()
         {
-
             if (_needReComplie)
             {
-
-                _builder.UseRandomName();
+                _builder.Name(typeof(TInterface).Name+ Guid.NewGuid().ToString("N"));
                 _builder.BodyScript.Clear();
                 StringBuilder _fieldBuilder = new StringBuilder();
                 StringBuilder _methodBuilder = new StringBuilder();
@@ -352,8 +350,7 @@ namespace Anno.Rpc.Client.Ext
                     _fieldBuilder.Append($@"static {CurrentProxyName}(){{ Instance = new {CurrentProxyName}(); }}");
                 }
                 _fieldBuilder.Append(ProxyBody);
-                _builder.Body(_fieldBuilder.ToString());
-                var type = _builder.GetType();
+                _builder.Body(_fieldBuilder.ToString()).GetType();
 
 
                 var action = NDelegate.UseCompiler(_builder.AssemblyBuilder).Action<List<(string memberName, Delegate @delegate, string typeScript)>>($@"
@@ -373,7 +370,7 @@ namespace Anno.Rpc.Client.Ext
         public Func<TInterface> GetCreator<TInterface>()
         {
 
-            Complie();
+            Complie<TInterface>();
             if (_useSingleton)
             {
 

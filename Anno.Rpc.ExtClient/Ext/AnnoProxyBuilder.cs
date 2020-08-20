@@ -18,11 +18,7 @@ namespace Anno.Rpc.Client.Ext
 
         public static TService GetService<TService>()
         {
-            if (!isInit)
-            {
-                NatashaInitializer.InitializeAndPreheating().Wait();
-                isInit = true;
-            }
+            Init();
             var iType = typeof(TService).FullName;
             if (caches.TryGetValue(iType, out object service))
             {
@@ -35,19 +31,8 @@ namespace Anno.Rpc.Client.Ext
 
         public static Type GetServiceType<TService>()
         {
-            if (!isInit)
-            {
-                NatashaInitializer.InitializeAndPreheating().Wait();
-                isInit = true;
-            }
-            var iType = typeof(TService).FullName;
-            if (caches.TryGetValue(iType, out object service))
-            {
-                return ((TService)service).GetType();
-            }
-            service = GetInstance<TService>();
-            caches.TryAdd(iType, service);
-            return ((TService)service).GetType();
+            var service = GetService<TService>();
+            return service.GetType();
         }
         /// <summary>
         /// 获取代理实例
@@ -76,7 +61,10 @@ namespace Anno.Rpc.Client.Ext
         {
             if (!isInit)
             {
-                NatashaInitializer.InitializeAndPreheating().Wait();
+                //NatashaInitializer.Initialize();
+                NatashaComponentRegister.RegistDomain<NatashaAssemblyDomain>();
+                NatashaComponentRegister.RegistCompiler<NatashaCSharpCompiler>();
+                NatashaComponentRegister.RegistSyntax<NatashaCSharpSyntax>();
                 isInit = true;
             }
         }
@@ -84,9 +72,6 @@ namespace Anno.Rpc.Client.Ext
         {
             StringBuilder script = new StringBuilder();
             script.AppendLine(@"Dictionary<string, string> input = new Dictionary<string, string>();");
-            script.AppendLine("input.Add(\"channel\", \"\");");
-            script.AppendLine("input.Add(\"router\", \"\");");
-            script.AppendLine("input.Add(\"method\", \"\");");
             var attributes = service.GetCustomAttributes(typeof(AnnoProxyAttribute), true);
             var methodAttributes = methodInfo.GetCustomAttributes(typeof(AnnoProxyAttribute), true);
             /*
@@ -119,27 +104,26 @@ namespace Anno.Rpc.Client.Ext
                         attribute.Method = mAttribute.Method;
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(attribute.Channel))
-                {
-                    script.AppendLine($"input[\"channel\"] = \"{attribute.Channel}\";");
 
-                }
-                if (!string.IsNullOrWhiteSpace(attribute.Router))
+                if (string.IsNullOrWhiteSpace(attribute.Channel) || string.IsNullOrWhiteSpace(attribute.Router) || string.IsNullOrWhiteSpace(attribute.Method))
                 {
-                    script.AppendLine($"input[\"router\"] = \"{attribute.Router}\";");
+                    throw new ArgumentNullException("管道参数 AnnoProxyAttribute[Channel、Router、Method] 不能为空");
                 }
-                if (!string.IsNullOrWhiteSpace(attribute.Method))
-                {
-                    script.AppendLine($"input[\"method\"] = \"{attribute.Method}\";");
-                }
+                script.AppendLine($"input.Add(\"channel\", \"{attribute.Channel}\");");
+                script.AppendLine($"input.Add(\"router\", \"{attribute.Router}\");");
+                script.AppendLine($"input.Add(\"method\", \"{attribute.Method}\");");
             }
             else
             {
-                throw new ArgumentNullException("请设置管道参数 AnnoProxyAttribute");
+                throw new ArgumentNullException("请设置管道参数 AnnoProxyAttribute[Channel、Router、Method]");
             }
             var parameters = methodInfo.GetParameters();
             for (int i = 0; i < parameters.Length; i++)
             {
+                if (parameters[i].Name.Equals("channel") || parameters[i].Name.Equals("router") || parameters[i].Name.Equals("method"))
+                {
+                    throw new ArgumentException("服务接口参数不能出现关键字[channel、router、method]");
+                }
                 if (parameters[i].ParameterType.IsClass && !parameters[i].ParameterType.Equals("".GetType()))
                 {
                     script.AppendLine($"input.Add(\"{parameters[i].Name}\", Newtonsoft.Json.JsonConvert.SerializeObject({parameters[i].Name}));");
@@ -164,7 +148,7 @@ namespace Anno.Rpc.Client.Ext
             else
             {
 
-                script.AppendLine(" string rlt = Anno.Rpc.Client.Connector.BrokerDns(input);");
+                script.AppendLine("Anno.Rpc.Client.Connector.BrokerDns(input);");
             }
             return script.ToString();
         }
