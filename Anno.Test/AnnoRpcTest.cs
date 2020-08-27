@@ -18,12 +18,11 @@ namespace Anno.Test
         {
             Init();
             var taskService = AnnoProxyBuilder.GetService<ITaskService>();
-            var taskServiceType = AnnoProxyBuilder.GetServiceType<ITaskService>();
             for (int i = 0; i < 100; i++)
             {
-                var rlt = taskService.SayHi("Du Yan Ming", new TaskDto() { Name = "Anno", Age = 18 });
-
-                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(rlt));
+                var rlt1 = taskService.SayHi("Du Yan Ming", new TaskDto() { Name = "Anno", Age = 18 });
+                var rlt2 = taskService.CustomizeSayHi("Anno");
+                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(rlt1));
             }
         }
         static void Init()

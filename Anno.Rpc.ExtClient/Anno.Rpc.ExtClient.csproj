@@ -14,7 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.Rpc.Client" Version="1.0.1.9" />
+    <PackageReference Include="Anno.EngineData" Version="1.0.2.2" />
+    <PackageReference Include="Anno.Rpc.Client" Version="1.0.2.2" />
     <PackageReference Include="DotNetCore.Natasha.CSharp.All" Version="1.0.0" />
   </ItemGroup>
 

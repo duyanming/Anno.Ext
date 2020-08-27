@@ -17,6 +17,9 @@ namespace Anno.Test
     {
         [AnnoProxy(Channel = "", Method = "", Router = "")]
         ActionResult SayHi(string Name, TaskDto task);
+
+        [AnnoProxy(Channel = "Anno.Plugs.Logic", Router = "CustomizeReturnType", Method = "SayHi")]
+        string CustomizeSayHi(string name);
     }
 
     public class TaskDto

@@ -27,17 +27,17 @@ namespace Anno.EngineData.Limit
         {
             this.LimitType = limitType;
         }
-        public override void RemoveCache(int key)
+        public override void RemoveCache(string key)
         {
             
         }
 
-        public override void SetCache(int key, ActionResult actionResult)
+        public override void SetCache(string key, ActionResult actionResult)
         {
             
         }
 
-        public override bool TryGetCache(int key, out ActionResult actionResult)
+        public override bool TryGetCache(string key, out ActionResult actionResult)
         {
             /*
              * Request()==true 则没有被限流

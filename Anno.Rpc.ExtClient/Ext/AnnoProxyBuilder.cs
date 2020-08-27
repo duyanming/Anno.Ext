@@ -4,6 +4,7 @@ Mail:dym880@163.com
 Create Date:2020/8/18 17:11:41 
 Functional description： AnnoProxyBuilder
 ******************************************************/
+using Anno.EngineData;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -136,13 +137,22 @@ namespace Anno.Rpc.Client.Ext
             if (methodInfo.ReturnType != typeof(void))
             {
                 script.AppendLine("string rlt = Anno.Rpc.Client.Connector.BrokerDns(input);");
-                if (methodInfo.ReturnType.IsClass && !methodInfo.ReturnType.Equals("".GetType()))
+                if (typeof(IActionResult).IsAssignableFrom(methodInfo.ReturnType))
                 {
                     script.AppendLine($"return Newtonsoft.Json.JsonConvert.DeserializeObject<{methodInfo.ReturnType.FullName}>(rlt);");
                 }
                 else
                 {
-                    throw new ArgumentNullException("返回类型必须是 void 或者 Anno.EngineData.ActionResult");
+                    script.AppendLine($"var data= Newtonsoft.Json.JsonConvert.DeserializeObject<ActionResult<{methodInfo.ReturnType.FullName}>>(rlt);");
+                    script.AppendLine(@"
+                    if (data.Status == false && data.OutputData == null&&!string.IsNullOrWhiteSpace(data.Msg))
+                    {
+                        throw new InvalidOperationException(data.Msg);
+                    }
+                    else
+                    {
+                        return data.OutputData;
+                    }");                    
                 }
             }
             else
