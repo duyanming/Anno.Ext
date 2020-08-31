@@ -12,14 +12,22 @@ using System.Text;
 
 namespace Anno.Test
 {
-    [AnnoProxy(Channel = "Anno.Plugs.Logic", Router = "Joke", Method = "Test0")]
+    [AnnoProxy(Channel = "Anno.Plugs.Logic", Router = "CustomizeReturnType", Method = "Test0")]
     public interface ITaskService
     {
-        [AnnoProxy(Channel = "", Method = "", Router = "")]
+        [AnnoProxy(Method = "Test0", Router = "Joke")]
         ActionResult SayHi(string Name, TaskDto task);
 
-        [AnnoProxy(Channel = "Anno.Plugs.Logic", Router = "CustomizeReturnType", Method = "SayHi")]
+        [AnnoProxy( Method = "SayHi")]
         string CustomizeSayHi(string name);
+        [AnnoProxy( Method = "Add")]
+        int Add(int x, int y);
+        [AnnoProxy( Method = "Dynamic")]
+        dynamic Dynamic();
+        [AnnoProxy( Method = "Object")]
+        object Object();
+        [AnnoProxy( Method = "Dyn")]
+        dynamic Dyn();
     }
 
     public class TaskDto
