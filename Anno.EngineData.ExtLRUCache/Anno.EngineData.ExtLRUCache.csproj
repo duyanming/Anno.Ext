@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="1.0.2.2" />
+    <PackageReference Include="Anno.EngineData" Version="1.0.2.4" />
   </ItemGroup>
 
   <ItemGroup>

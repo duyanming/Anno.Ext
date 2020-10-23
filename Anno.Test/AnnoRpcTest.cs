@@ -20,8 +20,8 @@ namespace Anno.Test
             var taskService = AnnoProxyBuilder.GetService<ITaskService>();
             for (int i = 0; i < 1; i++)
             {
-                var rlt1 = taskService.SayHi("Du Yan Ming", new TaskDto() { Name = "Anno", Age = 18 });
-                Console.WriteLine("SayHi:"+Newtonsoft.Json.JsonConvert.SerializeObject(rlt1));
+                var rlt1 = taskService.ServiceInstances();
+                Console.WriteLine("ServiceInstances:" + Newtonsoft.Json.JsonConvert.SerializeObject(rlt1));
                 Console.WriteLine("CustomizeSayHi:" + taskService.CustomizeSayHi("AnnoProxy"));
                 Console.WriteLine("Add:" + taskService.Add(6,8));
                 Console.WriteLine("Dyn:" + taskService.Dyn());
@@ -33,7 +33,7 @@ namespace Anno.Test
         {
             AnnoProxyBuilder.Init();
             DefaultConfigManager.SetDefaultConnectionPool(1000, Environment.ProcessorCount * 2, 50);
-            DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 6660, false);
+            DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 7010, false);
         }
     }
 }
