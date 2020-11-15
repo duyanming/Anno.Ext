@@ -7,7 +7,7 @@
     <Company>Du yanming</Company>
     <Product>Anno.Rpc.ExtClient</Product>
     <Description>Cache</Description>
-    <PackageProjectUrl>https://github.com/duyanming/Anno.LRUCache</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/duyanming/Anno.Ext</PackageProjectUrl>
     <PackageId>Anno.Rpc.ExtClient</PackageId>
     <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
     <RootNamespace>Anno.Rpc.Client</RootNamespace>
@@ -16,7 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Anno.EngineData" Version="1.0.2.6" />
     <PackageReference Include="Anno.Rpc.Client" Version="1.0.2.6" />
-    <PackageReference Include="DotNetCore.Natasha.CSharp.All" Version="2.0.1.1" />
+    <PackageReference Include="DotNetCore.Natasha.CSharp.All" Version="2.0.2.1" />
   </ItemGroup>
 
 </Project>

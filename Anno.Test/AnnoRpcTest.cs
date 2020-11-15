@@ -6,6 +6,7 @@ Functional description： AnnoRpcTest
 ******************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Anno.Rpc.Client;
 using Anno.Rpc.Client.Ext;
@@ -17,7 +18,17 @@ namespace Anno.Test
         public static void Handle()
         {
             Init();
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
             var taskService = AnnoProxyBuilder.GetService<ITaskService>();
+            stopWatch.Stop();
+            Console.WriteLine($"AnnoProxyBuilder.GetService：{stopWatch.Elapsed}");
+
+            stopWatch.Restart();
+            taskService = AnnoProxyBuilder.GetService<ITaskService>();
+            stopWatch.Stop();
+            Console.WriteLine($"AnnoProxyBuilder.GetService2：{stopWatch.Elapsed}");
+
             for (int i = 0; i < 1; i++)
             {
                 var rlt1 = taskService.ServiceInstances();
@@ -31,7 +42,11 @@ namespace Anno.Test
         }
         static void Init()
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
             AnnoProxyBuilder.Init();
+            stopWatch.Stop();
+            Console.WriteLine($"AnnoProxyBuilder.Init(false)：{stopWatch.Elapsed}");
             DefaultConfigManager.SetDefaultConnectionPool(1000, Environment.ProcessorCount * 2, 50);
             DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 7010, false);
         }

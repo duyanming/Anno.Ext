@@ -7,7 +7,7 @@
     <Company>Du yanming</Company>
     <Product>Anno.EngineData.Cache</Product>
     <Description>Cache</Description>
-    <PackageProjectUrl>https://github.com/duyanming/AnnoDemo</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/duyanming/Viper</PackageProjectUrl>
     <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
     <PackageId>Anno.EngineData.Cache</PackageId>
   </PropertyGroup>
