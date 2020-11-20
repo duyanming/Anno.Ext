@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Anno.Rpc.Client;
-using Anno.Rpc.Client.Ext;
+using Anno.Rpc.Client.DynamicProxy;
 
 namespace Anno.Test
 {
@@ -42,11 +42,11 @@ namespace Anno.Test
         }
         static void Init()
         {
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-            AnnoProxyBuilder.Init();
-            stopWatch.Stop();
-            Console.WriteLine($"AnnoProxyBuilder.Init(false)：{stopWatch.Elapsed}");
+            //Stopwatch stopWatch = new Stopwatch();
+            //stopWatch.Start();
+            //AnnoProxyBuilder.Init();
+            //stopWatch.Stop();
+            //Console.WriteLine($"AnnoProxyBuilder.Init(false)：{stopWatch.Elapsed}");
             DefaultConfigManager.SetDefaultConnectionPool(1000, Environment.ProcessorCount * 2, 50);
             DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 7010, false);
         }

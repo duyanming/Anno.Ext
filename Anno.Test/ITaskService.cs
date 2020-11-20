@@ -5,7 +5,7 @@ Create Date:2020/8/18 18:02:49
 Functional description： ITaskService
 ******************************************************/
 using Anno.EngineData;
-using Anno.Rpc.Client.Ext;
+using Anno.Rpc.Client.DynamicProxy;
 using System;
 using System.Collections.Generic;
 using System.Text;

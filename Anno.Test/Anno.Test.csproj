@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Anno.LRUCache\Anno.LRUCache.csproj" />
-    <ProjectReference Include="..\Anno.Rpc.ExtClient\Anno.Rpc.ExtClient.csproj" />
+    <ProjectReference Include="..\Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj" />
   </ItemGroup>
 
 </Project>
