@@ -1,7 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/duyanming/Anno.Ext</PackageProjectUrl>
+    <Description>Anno.Rpc.Client.DynamicProxy,客户端RPC接口代理</Description>
+    <PackageId>Anno.Rpc.Client.DynamicProxy</PackageId>
+    <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
+    <Version>$(Version)</Version>
+    <Authors>Du yanming</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
