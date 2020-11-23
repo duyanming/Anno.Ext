@@ -2,7 +2,28 @@
   <PropertyGroup>
     <DeveloperBuildCoreTfms>netcoreapp3.0</DeveloperBuildCoreTfms>
       <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.2.6</Version>
-    <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
+    <Version>1.0.2.7</Version>
+    <PackageIcon>logo.jpg</PackageIcon>
+    <PackageLicenseUrl>https://github.com/duyanming/Anno.Core/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/duyanming/Anno.Ext</PackageProjectUrl>
   </PropertyGroup>
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/duyanming/Anno.Ext</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <packageTypes>
+      <packageType name="SymbolsPackage"/>
+    </packageTypes>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <Content Include="..\logo.jpg" Link="logo.jpg" PackagePath="\" />
+  </ItemGroup>
+
 </Project>

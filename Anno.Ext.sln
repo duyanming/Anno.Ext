@@ -14,13 +14,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builder", "Builder", "{F720A73C-85C6-4EA2-BD73-F510DBD678E5}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		logo.jpg = logo.jpg
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.EngineData.ExtRateLimit", "Anno.EngineData.ExtRateLimit\Anno.EngineData.ExtRateLimit.csproj", "{F520AF3B-D104-4F8B-9E53-9A4A63F58EBE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Rpc.ExtClient", "Anno.Rpc.ExtClient\Anno.Rpc.ExtClient.csproj", "{72514439-CF33-468B-97C8-67FAE37B675A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.Rpc.Client.DynamicProxy", "Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj", "{69CCE685-6C03-40C1-8FEA-79A3C03504E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Rpc.Client.DynamicProxy", "Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj", "{69CCE685-6C03-40C1-8FEA-79A3C03504E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

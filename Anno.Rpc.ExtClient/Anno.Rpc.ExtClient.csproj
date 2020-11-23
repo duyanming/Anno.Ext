@@ -7,9 +7,7 @@
     <Company>Du yanming</Company>
     <Product>Anno.Rpc.ExtClient</Product>
     <Description>Cache</Description>
-    <PackageProjectUrl>https://github.com/duyanming/Anno.Ext</PackageProjectUrl>
     <PackageId>Anno.Rpc.ExtClient</PackageId>
-    <PackageIconUrl>http://140.143.207.244/img/logo.jpg</PackageIconUrl>
     <RootNamespace>Anno.Rpc.Client</RootNamespace>
   </PropertyGroup>
 
