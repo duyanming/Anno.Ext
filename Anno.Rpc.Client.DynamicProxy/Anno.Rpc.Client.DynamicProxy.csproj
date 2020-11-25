@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>$(DevTargetFramework)</TargetFrameworks>
     <Description>Anno.Rpc.Client.DynamicProxy,客户端RPC接口代理</Description>
     <PackageId>Anno.Rpc.Client.DynamicProxy</PackageId>
-    <Version>$(Version)</Version>
+    <Version>1.0.2.8</Version>
     <Authors>Du yanming</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
