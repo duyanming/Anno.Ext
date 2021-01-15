@@ -2,7 +2,7 @@
   <PropertyGroup>
     <DeveloperBuildCoreTfms>net5.0</DeveloperBuildCoreTfms>
     <DevTargetFramework>netstandard2.0;netstandard2.1;net461</DevTargetFramework>
-    <Version>1.0.2.7</Version>
+    <Version>1.0.3</Version>
     <PackageIcon>logo.jpg</PackageIcon>
     <PackageLicenseUrl>https://github.com/duyanming/Anno.Core/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/duyanming/Anno.Ext</PackageProjectUrl>

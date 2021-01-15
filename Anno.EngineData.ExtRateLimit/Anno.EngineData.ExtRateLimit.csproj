@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="1.0.2.6" />
-    <PackageReference Include="Anno.RateLimit" Version="1.0.1.5" />
+    <PackageReference Include="Anno.EngineData" Version="1.0.3" />
+    <PackageReference Include="Anno.RateLimit" Version="1.0.1.6" />
   </ItemGroup>
 
 </Project>
