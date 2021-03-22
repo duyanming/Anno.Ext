@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(DevTargetFramework)</TargetFrameworks>
+    <TargetFrameworks>$(DevTargetFramework);net45;net451;net40</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Du yanming</Authors>
     <Company>Du yanming</Company>
