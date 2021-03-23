@@ -9,5 +9,4 @@
     <Description>Cache</Description>
     <PackageId>Anno.LRUCache</PackageId>
   </PropertyGroup>
-
 </Project>
