@@ -68,6 +68,11 @@ namespace Anno.Rpc.Client.DynamicProxy
             var _params = invocation.Method.GetParameters();
             for (int i = 0; i < _params.Length; i++)
             {
+                //null 不传递
+                if (invocation.Arguments[i] == null)
+                {
+                    continue;
+                }
                 var param = _params[i];
                 if (param.ParameterType.IsClass && param.ParameterType != "".GetType())
                 {

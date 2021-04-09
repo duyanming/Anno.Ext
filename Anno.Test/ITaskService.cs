@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Anno.Test
 {
-    [AnnoProxy(Channel = "Anno.Plugs.Viper", Router = "Exam", Method = "Dynamic")]
+    [AnnoProxy(Channel = "Anno.Plugs.Viper", Router = "Exam")]
     public interface ITaskService
     {
         [AnnoProxy(Channel = "Anno.Plugs.Trace", Method = "GetServiceInstances", Router = "Router")]
@@ -29,6 +29,9 @@ namespace Anno.Test
         /// <returns></returns>
         [AnnoProxy(Method = "SayHi")]
         Task<string> TaskSayHi(string name);
+
+        string SayHi(string name);
+
 
         [AnnoProxy(Method = "SayHi")]
         Task TaskVoidSayHi(string name);

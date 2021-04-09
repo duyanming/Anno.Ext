@@ -42,6 +42,8 @@ namespace Anno.Test
                 Console.WriteLine("Dyn:" + taskService.Dyn());
                 Console.WriteLine("Object:" + taskService.Object());
                 Console.WriteLine("Dynamic:" + taskService.Dynamic());
+
+              var rlt=  taskService.SayHi(null);
             }
         }
         static void Init()
