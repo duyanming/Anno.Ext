@@ -29,12 +29,16 @@ namespace Anno.Test
             stopWatch.Stop();
             Console.WriteLine($"AnnoProxyBuilder.GetService2：{stopWatch.Elapsed}");
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var rlt1 = taskService.ServiceInstances();
+
+                Console.WriteLine("TaskSayHi:" + taskService.TaskSayHi("杜燕明").Result);
+                taskService.TaskVoidSayHi("TaskVoid").Wait();
+                taskService.VoidSayHi("Void");
                 Console.WriteLine("ServiceInstances:" + Newtonsoft.Json.JsonConvert.SerializeObject(rlt1));
                 Console.WriteLine("CustomizeSayHi:" + taskService.CustomizeSayHi("AnnoProxy"));
-                Console.WriteLine("Add:" + taskService.Add(6,8));
+                Console.WriteLine("Add:" + taskService.Add(6, 8));
                 Console.WriteLine("Dyn:" + taskService.Dyn());
                 Console.WriteLine("Object:" + taskService.Object());
                 Console.WriteLine("Dynamic:" + taskService.Dynamic());

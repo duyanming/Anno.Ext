@@ -9,6 +9,7 @@ using Anno.Rpc.Client.DynamicProxy;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Anno.Test
 {
@@ -18,15 +19,30 @@ namespace Anno.Test
         [AnnoProxy(Channel = "Anno.Plugs.Trace", Method = "GetServiceInstances", Router = "Router")]
         ActionResult ServiceInstances();
 
-        [AnnoProxy( Method = "SayHi")]
+        [AnnoProxy(Method = "SayHi")]
         string CustomizeSayHi(string name);
-        [AnnoProxy( Method = "Add")]
+
+        /// <summary>
+        /// 异步
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [AnnoProxy(Method = "SayHi")]
+        Task<string> TaskSayHi(string name);
+
+        [AnnoProxy(Method = "SayHi")]
+        Task TaskVoidSayHi(string name);
+
+        [AnnoProxy(Method = "SayHi")]
+        void VoidSayHi(string name);
+
+        [AnnoProxy(Method = "Add")]
         int Add(int x, int y);
-        [AnnoProxy( Method = "Dynamic")]
+        [AnnoProxy(Method = "Dynamic")]
         dynamic Dynamic();
-        [AnnoProxy( Method = "Object")]
+        [AnnoProxy(Method = "Object")]
         object Object();
-        [AnnoProxy( Method = "Dyn")]
+        [AnnoProxy(Method = "Dyn")]
         dynamic Dyn();
     }
 

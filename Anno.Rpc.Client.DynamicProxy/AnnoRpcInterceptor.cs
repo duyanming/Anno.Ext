@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Castle.DynamicProxy;
 using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Anno.Rpc.Client.DynamicProxy
@@ -11,6 +12,7 @@ namespace Anno.Rpc.Client.DynamicProxy
     using Anno.Rpc.Client;
     public class AnnoRpcInterceptor : IInterceptor
     {
+        private static Type _taskType = typeof(Task);
         public void Intercept(IInvocation invocation)
         {
             Dictionary<string, string> input = new Dictionary<string, string>();
@@ -67,7 +69,7 @@ namespace Anno.Rpc.Client.DynamicProxy
             for (int i = 0; i < _params.Length; i++)
             {
                 var param = _params[i];
-                if (param.ParameterType.IsClass && !param.ParameterType.Equals("".GetType()))
+                if (param.ParameterType.IsClass && param.ParameterType != "".GetType())
                 {
                     input.AddOrUpdate(param.Name, JsonConvert.SerializeObject(invocation.Arguments[i]));
                 }
@@ -79,24 +81,53 @@ namespace Anno.Rpc.Client.DynamicProxy
             if (invocation.Method.ReturnType != typeof(void))
             {
                 var rltStr = Connector.BrokerDns(input);
-                if (typeof(EngineData.IActionResult).IsAssignableFrom(invocation.Method.ReturnType))
+                Type realReturnType = null;
+                bool isTask = false;
+                if (invocation.Method.ReturnType.BaseType != null && invocation.Method.ReturnType.BaseType.FullName.Equals("System.Threading.Tasks.Task"))
                 {
-                    invocation.ReturnValue = JsonConvert.DeserializeObject(rltStr, type: invocation.Method.ReturnType);
-                }
-                else
-                {
-                    var rltType = Type.GetType("Anno.EngineData.ActionResult`1, Anno.EngineData").MakeGenericType(invocation.Method.ReturnType);
-                    var data = JsonConvert.DeserializeObject(rltStr, rltType) as dynamic;
-                    if (data.Status == false && data.OutputData == null && !string.IsNullOrWhiteSpace(data.Msg))
+                    var generics = invocation.Method.ReturnType.GenericTypeArguments;
+                    if (generics != null && generics.Length > 0)
                     {
-                        throw new AnnoRpcException(data.Msg);
+                        realReturnType = generics[0];
                     }
                     else
                     {
-                        invocation.ReturnValue = data.OutputData;
+                        realReturnType = _taskType;
                     }
+                    isTask = true;
+                }
+                else
+                {
+                    realReturnType = invocation.Method.ReturnType;
                 }
 
+                if (realReturnType == _taskType)
+                {
+                    invocation.ReturnValue = Task.CompletedTask;
+                }
+                else
+                {
+                    dynamic returnValue;
+                    if (typeof(EngineData.IActionResult).IsAssignableFrom(realReturnType))
+                    {
+                        returnValue = JsonConvert.DeserializeObject(rltStr, type: realReturnType);
+                    }
+                    else
+                    {
+                        var rltType = Type.GetType("Anno.EngineData.ActionResult`1, Anno.EngineData").MakeGenericType(realReturnType);
+                        var data = JsonConvert.DeserializeObject(rltStr, rltType) as dynamic;
+                        if (data.Status == false && data.OutputData == null && !string.IsNullOrWhiteSpace(data.Msg))
+                        {
+                            throw new AnnoRpcException(data.Msg);
+                        }
+                        else
+                        {
+                            returnValue = data.OutputData;
+                        }
+                    }
+
+                    invocation.ReturnValue = isTask ? Task.FromResult(returnValue) : returnValue;
+                }
             }
             else
             {
