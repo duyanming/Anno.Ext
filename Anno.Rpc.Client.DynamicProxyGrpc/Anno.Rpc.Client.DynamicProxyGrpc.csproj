@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(DevTargetFramework)</TargetFrameworks>
+    <Description>Anno.Rpc.Client.DynamicProxyGrpc,客户端RPC接口代理</Description>
+    <PackageId>Anno.Rpc.Client.DynamicProxyGrpc</PackageId>
+    <Authors>Du yanming</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Anno.EngineData" Version="1.0.3.5" />
+    <PackageReference Include="Anno.Rpc.ClientGrpc" Version="1.0.3.5" />
+    <PackageReference Include="Castle.Core" Version="4.4.1" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <Compile Include="..\Anno.Rpc.Client.DynamicProxy\*.cs" />
+  </ItemGroup>
+
+</Project>
