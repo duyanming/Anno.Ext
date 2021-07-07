@@ -20,6 +20,11 @@ namespace Anno.Test
             Init();
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+
+            //var proxys = AnnoProxyBuilder.GetServices(typeof(AnnoRpcTest).Assembly);
+            //proxys.TryGetValue(typeof(ITaskService), out object taskServiceObj);
+            //ITaskService taskService=taskServiceObj as ITaskService;
+
             var taskService = AnnoProxyBuilder.GetService<ITaskService>();
             stopWatch.Stop();
             Console.WriteLine($"AnnoProxyBuilder.GetService：{stopWatch.Elapsed}");
