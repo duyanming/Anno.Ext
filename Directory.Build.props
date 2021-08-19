@@ -5,7 +5,7 @@
     <Version>1.5.0.1</Version>
     <Authors>Du yanming</Authors>
     <Company>Du yanming</Company>
-    <PackageIcon>logo.jpg</PackageIcon>
+    <PackageIcon>logo.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/duyanming/Anno.Ext</PackageProjectUrl>
   </PropertyGroup>
@@ -29,7 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <None Include="$(SolutionDir)logo.jpg"  Pack="true" PackagePath="\" />
+    <None Include="$(SolutionDir)logo.png"  Pack="true" PackagePath="\" />
     <None Include="$(SolutionDir)LICENSE"  Pack="true" PackagePath="\" />
   </ItemGroup>
 

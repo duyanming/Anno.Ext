@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29503.13
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31410.414
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.LRUCache", "Anno.LRUCache\Anno.LRUCache.csproj", "{4D8EE153-E37D-4121-B537-CACE822641AD}"
 EndProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builder", "Builder", "{F720
 		Directory.Build.props = Directory.Build.props
 		key.snk = key.snk
 		LICENSE = LICENSE
-		logo.jpg = logo.jpg
+		logo.png = logo.png
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Rpc.ExtClient", "Anno.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Rpc.Client.DynamicProxy", "Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj", "{69CCE685-6C03-40C1-8FEA-79A3C03504E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.Rpc.Client.DynamicProxyGrpc", "Anno.Rpc.Client.DynamicProxyGrpc\Anno.Rpc.Client.DynamicProxyGrpc.csproj", "{1DFCD4A1-E559-4378-95AA-937B069181B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Rpc.Client.DynamicProxyGrpc", "Anno.Rpc.Client.DynamicProxyGrpc\Anno.Rpc.Client.DynamicProxyGrpc.csproj", "{1DFCD4A1-E559-4378-95AA-937B069181B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
