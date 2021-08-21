@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,12 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="1.5.0.1" />
+    <PackageReference Include="Anno.EngineData" Version="1.6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Anno.LRUCache\Anno.LRUCache.csproj" />
-    <ProjectReference Include="..\Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj" />
+    <!--<ProjectReference Include="..\Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj" />-->
+    <ProjectReference Include="..\Anno.Rpc.Client.DynamicProxyGrpc\Anno.Rpc.Client.DynamicProxyGrpc.csproj" />
   </ItemGroup>
 
 </Project>

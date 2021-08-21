@@ -47,6 +47,12 @@ namespace Anno.Test
         object Object();
         [AnnoProxy(Method = "Dyn")]
         dynamic Dyn();
+
+        [AnnoProxy(Method = "Dynamic")]
+        UserDto DynamicReturnClass();
+
+        [AnnoProxy(Method = "Dynamic")]
+        Task<UserDto> DynamicReturnClassTask();
     }
 
     public class TaskDto

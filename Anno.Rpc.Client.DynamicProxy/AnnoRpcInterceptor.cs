@@ -13,6 +13,7 @@ namespace Anno.Rpc.Client.DynamicProxy
     public class AnnoRpcInterceptor : IInterceptor
     {
         private static Type _taskType = typeof(Task);
+        private static Type rltObjectType = Type.GetType("Anno.EngineData.ActionResult`1, Anno.EngineData").MakeGenericType(typeof(object));
         public void Intercept(IInvocation invocation)
         {
             Dictionary<string, string> input = new Dictionary<string, string>();
@@ -86,6 +87,24 @@ namespace Anno.Rpc.Client.DynamicProxy
             if (invocation.Method.ReturnType != typeof(void))
             {
                 var rltStr = Connector.BrokerDns(input);
+                if (rltStr.IndexOf("tatus\":false") > 0)
+                {
+                    string errorMsg = "服务端未知错误";
+                    try
+                    {
+                        var errorData = JsonConvert.DeserializeObject(rltStr, rltObjectType) as dynamic;
+                        errorMsg = errorData.Msg;
+                    }
+                    catch
+                    {
+                        int errorMsgLength = rltStr.IndexOf("\",\"Status\"");
+                        if (errorMsgLength > 11)
+                        {
+                            errorMsg = rltStr.Substring(8, errorMsgLength - 8);
+                        }
+                    }
+                    throw new AnnoRpcException(errorMsg);
+                }
                 Type realReturnType = null;
                 bool isTask = false;
                 if (invocation.Method.ReturnType.BaseType != null && invocation.Method.ReturnType.BaseType.FullName.Equals("System.Threading.Tasks.Task"))

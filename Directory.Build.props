@@ -2,7 +2,7 @@
   <PropertyGroup>
     <DeveloperBuildCoreTfms>net5.0</DeveloperBuildCoreTfms>
     <DevTargetFramework>netstandard2.0;netstandard2.1;net461</DevTargetFramework>
-    <Version>1.5.0.1</Version>
+    <Version>1.6.0.1</Version>
     <Authors>Du yanming</Authors>
     <Company>Du yanming</Company>
     <PackageIcon>logo.png</PackageIcon>
