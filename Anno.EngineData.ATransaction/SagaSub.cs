@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Anno.EngineData
 {
+    using Newtonsoft.Json;
     /// <summary>
     /// 子任务
     /// </summary>
@@ -35,6 +36,8 @@ namespace Anno.EngineData
                 response.Add("globalTraceId", globalId);
                 response.Add("traceId", traceId);
                 response.Add("recover", this.RecoverMethod);
+                response.Add("sagaInput", JsonConvert.SerializeObject(context.Input));
+                response.Add("sagaRlt", JsonConvert.SerializeObject(context.ActionResult));
                 context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", "SagaSub", response);
             }
         }

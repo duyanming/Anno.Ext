@@ -2,9 +2,9 @@
 
 namespace Anno.EngineData
 {
-    using Anno.Const.Enum;
     using Anno.EngineData.Filters;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// 保证一致性，入口
@@ -26,6 +26,7 @@ namespace Anno.EngineData
             Dictionary<string, string> response = new Dictionary<string, string>();
             response.Add("globalTraceId", globalId);
             response.Add("recover",this.RecoverMethod);
+            response.Add("sagaInput", JsonConvert.SerializeObject(context.Input));
             context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", "SagaStarted", response);
         }
         /*
