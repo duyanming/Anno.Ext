@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31605.320
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31410.414
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.LRUCache", "Anno.LRUCache\Anno.LRUCache.csproj", "{4D8EE153-E37D-4121-B537-CACE822641AD}"
 EndProject
@@ -25,6 +25,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Rpc.Client.DynamicProxy", "Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj", "{69CCE685-6C03-40C1-8FEA-79A3C03504E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Rpc.Client.DynamicProxyGrpc", "Anno.Rpc.Client.DynamicProxyGrpc\Anno.Rpc.Client.DynamicProxyGrpc.csproj", "{1DFCD4A1-E559-4378-95AA-937B069181B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.EngineData.ATransaction", "Anno.EngineData.ATransaction\Anno.EngineData.ATransaction.csproj", "{2CC48EE7-7C46-4498-82E1-C61671512CBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.Plugs.DTransactionService", "Anno.Plugs.DTransactionService\Anno.Plugs.DTransactionService.csproj", "{BA9CA440-2201-4C3F-85F8-09751BD8227E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +64,14 @@ Global
 		{1DFCD4A1-E559-4378-95AA-937B069181B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DFCD4A1-E559-4378-95AA-937B069181B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DFCD4A1-E559-4378-95AA-937B069181B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CC48EE7-7C46-4498-82E1-C61671512CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CC48EE7-7C46-4498-82E1-C61671512CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CC48EE7-7C46-4498-82E1-C61671512CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CC48EE7-7C46-4498-82E1-C61671512CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA9CA440-2201-4C3F-85F8-09751BD8227E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA9CA440-2201-4C3F-85F8-09751BD8227E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA9CA440-2201-4C3F-85F8-09751BD8227E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA9CA440-2201-4C3F-85F8-09751BD8227E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
