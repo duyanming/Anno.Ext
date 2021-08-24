@@ -85,6 +85,15 @@ namespace Anno.Plugs.DTransactionService
                     router = tx.sagaInput[Eng.CLASS];
                     method = tx.recover;
                     response.Add("sagaRlt", tx.sagaRlt);
+
+                    if (response.ContainsKey("TraceId")) {
+                        response.Remove("TraceId");
+                    }
+
+                    if (response.ContainsKey("PreTraceId"))
+                    {
+                        response.Remove("PreTraceId");
+                    }
                     this.InvokeProcessor(channel, router, method, response);
 #if DEBUG
                     Log.Log.WriteLine($"channel:{channel},router:{router},method:{method}       SagaRecovery!");
