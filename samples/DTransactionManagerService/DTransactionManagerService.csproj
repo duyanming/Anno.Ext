@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Packages\Anno.Plugs.Tx3Service\Anno.Plugs.Tx3Service.csproj" />
+    <ProjectReference Include="..\..\Anno.Plugs.DTransactionService\Anno.Plugs.DTransactionService.csproj" />
   </ItemGroup>
   
   <ItemGroup>

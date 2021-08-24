@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31402.337
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31410.414
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.LRUCache", "Anno.LRUCache\Anno.LRUCache.csproj", "{4D8EE153-E37D-4121-B537-CACE822641AD}"
 EndProject
@@ -34,19 +34,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{FCDA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{B391FC7B-A155-4B66-A3FF-12500B6F1115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnoCenter", "samples\AnnoCenter\AnnoCenter.csproj", "{B247D8EF-351A-414A-9E70-F4ED44F98CBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnoCenter", "samples\AnnoCenter\AnnoCenter.csproj", "{B247D8EF-351A-414A-9E70-F4ED44F98CBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnoService01", "samples\AnnoService01\AnnoService01.csproj", "{96D7B369-7252-4FE5-BDAC-4E044FC00053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnoService01", "samples\AnnoService01\AnnoService01.csproj", "{96D7B369-7252-4FE5-BDAC-4E044FC00053}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnoService02", "samples\AnnoService02\AnnoService02.csproj", "{630CC8F0-2FD5-4251-ADD8-73590BEA987A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnoService03", "samples\AnnoService03\AnnoService03.csproj", "{5B6794E5-7873-4922-B99B-E17F1DCB96E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.Plugs.Tx1Service", "samples\Packages\Anno.Plugs.Tx1Service\Anno.Plugs.Tx1Service.csproj", "{1E914842-5F0F-4F21-B0E5-5A224B305C32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Plugs.Tx1Service", "samples\Packages\Anno.Plugs.Tx1Service\Anno.Plugs.Tx1Service.csproj", "{1E914842-5F0F-4F21-B0E5-5A224B305C32}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Plugs.Tx2Service", "samples\Packages\Anno.Plugs.Tx2Service\Anno.Plugs.Tx2Service.csproj", "{6B61406D-5CE1-4333-B79C-E7C7880AF160}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Plugs.Tx3Service", "samples\Packages\Anno.Plugs.Tx3Service\Anno.Plugs.Tx3Service.csproj", "{870D90E0-FCC7-4022-8020-C6F6CD841A4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTransactionManagerService", "samples\DTransactionManagerService\DTransactionManagerService.csproj", "{FB71E071-F94A-4813-BEF0-DDDAE1DD11E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,6 +120,10 @@ Global
 		{870D90E0-FCC7-4022-8020-C6F6CD841A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{870D90E0-FCC7-4022-8020-C6F6CD841A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{870D90E0-FCC7-4022-8020-C6F6CD841A4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB71E071-F94A-4813-BEF0-DDDAE1DD11E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB71E071-F94A-4813-BEF0-DDDAE1DD11E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB71E071-F94A-4813-BEF0-DDDAE1DD11E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB71E071-F94A-4813-BEF0-DDDAE1DD11E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +137,7 @@ Global
 		{1E914842-5F0F-4F21-B0E5-5A224B305C32} = {B391FC7B-A155-4B66-A3FF-12500B6F1115}
 		{6B61406D-5CE1-4333-B79C-E7C7880AF160} = {B391FC7B-A155-4B66-A3FF-12500B6F1115}
 		{870D90E0-FCC7-4022-8020-C6F6CD841A4A} = {B391FC7B-A155-4B66-A3FF-12500B6F1115}
+		{FB71E071-F94A-4813-BEF0-DDDAE1DD11E0} = {FCDA5E04-4C21-40A0-81C9-790336ED55A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0FD456F-19D8-4E30-A735-C7D3C1EB40C6}

@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="1.6.0.1" />
+    <PackageReference Include="Anno.EngineData" Version="1.6.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Anno.EngineData.ATransaction\Anno.EngineData.ATransaction.csproj" />
