@@ -40,16 +40,29 @@ namespace Anno.EngineData
                 response.Add("sagaRlt", JsonConvert.SerializeObject(context.ActionResult));
                 context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", "SagaSub", response);
             }
+            else
+            {
+                SagaSubError(context);
+            }
         }
         /*
          * 业务异常后(冲正)
          */
         public void OnException(Exception ex, BaseModule context)
         {
+            SagaSubError(context);
+        }
+        /// <summary>
+        /// 结束通知
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="success"></param>
+        private void SagaSubError(BaseModule context)
+        {
             context.Input.TryGetValue(GlobalTraceId, out string globalId);
             Dictionary<string, string> response = new Dictionary<string, string>();
             response.Add("globalTraceId", globalId);
-            context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", "SagaRecovery", response);
+            context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", "SagaSubError", response);
         }
     }
 }

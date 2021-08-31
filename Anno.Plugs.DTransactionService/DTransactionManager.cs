@@ -13,7 +13,13 @@ namespace Anno.Plugs.DTransactionService
     using System.Collections.Concurrent;
     public static class DTransactionManager
     {
-        public static ConcurrentDictionary<string, ConcurrentStack<SagaTx>> Sagas = new ConcurrentDictionary<string, ConcurrentStack<SagaTx>>();
+        public static ConcurrentDictionary<string, SagaTxs> Sagas = new ConcurrentDictionary<string, SagaTxs>();
 
+    }
+    public class SagaTxs
+    {
+        public ConcurrentStack<SagaTx> Sagas { get; set; } = new ConcurrentStack<SagaTx>();
+        public bool Success { get; set; } = true;
+        public DateTime Deadline { get; set; }=DateTime.Now.AddSeconds(30);
     }
 }

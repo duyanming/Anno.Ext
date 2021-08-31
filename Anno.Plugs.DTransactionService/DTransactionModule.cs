@@ -21,23 +21,26 @@ namespace Anno.Plugs.DTransactionService
         /// <summary>
         /// 开始Saga
         /// </summary>
-        /// <param name="globalTraceId"></param>
-        /// <param name="recover"></param>
+        /// <param name="globalTraceId">全局追踪ID</param>
+        /// <param name="recover">恢复方法</param>
+        /// <param name="sagaInput">输入</param>
+        /// <param name="executionTimeSpan">预估整个任务执行时间长度</param>
         /// <returns></returns>
-        public dynamic SagaStarted(string globalTraceId, string recover, Dictionary<string, string> sagaInput)
+        public dynamic SagaStarted(string globalTraceId, string recover, Dictionary<string, string> sagaInput,double executionTimeSpan)
         {
-            DTransactionManager.Sagas.TryGetValue(globalTraceId, out ConcurrentStack<SagaTx> txs);
-            if (txs == null)
+            DTransactionManager.Sagas.TryGetValue(globalTraceId, out SagaTxs sagaTxs);
+            if (sagaTxs == null)
             {
-                txs = new ConcurrentStack<SagaTx>();
-                txs.Push(new SagaTx()
+                sagaTxs = new SagaTxs();
+                sagaTxs.Sagas.Push(new SagaTx()
                 {
                     sagaGlobalId = globalTraceId,
                     recover = recover,
                     sagaInput = sagaInput,
                     sagaId = globalTraceId
                 });
-                DTransactionManager.Sagas.TryAdd(globalTraceId, txs);
+                sagaTxs.Deadline=DateTime.Now.AddMilliseconds(executionTimeSpan);
+                DTransactionManager.Sagas.TryAdd(globalTraceId, sagaTxs);
             }
             return true;
         }
@@ -51,11 +54,13 @@ namespace Anno.Plugs.DTransactionService
         /// <returns></returns>
         public dynamic SagaSub(string globalTraceId, string traceId, string recover, Dictionary<string, string> sagaInput, string sagaRlt)
         {
-
-            DTransactionManager.Sagas.TryGetValue(globalTraceId, out ConcurrentStack<SagaTx> txs);
-            if (txs != null && !txs.ToList().Exists(tx => tx.sagaId == traceId))
+            if (string.IsNullOrWhiteSpace(globalTraceId)) {
+                return false;
+            }
+            DTransactionManager.Sagas.TryGetValue(globalTraceId, out SagaTxs sagaTxs);
+            if (sagaTxs != null && !sagaTxs.Sagas.ToList().Exists(tx => tx.sagaId == traceId))
             {
-                txs.Push(new SagaTx()
+                sagaTxs.Sagas.Push(new SagaTx()
                 {
                     sagaGlobalId = globalTraceId,
                     recover = recover,
@@ -63,7 +68,6 @@ namespace Anno.Plugs.DTransactionService
                     sagaId = traceId,
                     sagaRlt = sagaRlt
                 });
-                DTransactionManager.Sagas.TryAdd(globalTraceId, txs);
             }
             return true;
         }
@@ -72,10 +76,37 @@ namespace Anno.Plugs.DTransactionService
         /// </summary>
         /// <param name="globalTraceId"></param>
         /// <returns></returns>
-        public dynamic SagaRecovery(string globalTraceId)
+        public dynamic SagaSubError(string globalTraceId)
         {
-            DTransactionManager.Sagas.TryRemove(globalTraceId, out ConcurrentStack<SagaTx> txs);
-            while (txs.TryPop(out SagaTx tx))
+            if (string.IsNullOrWhiteSpace(globalTraceId))
+            {
+                return false;
+            }
+            DTransactionManager.Sagas.TryGetValue(globalTraceId, out SagaTxs sagaTxs);
+            sagaTxs.Success = false;
+            return true;
+        }
+        /// <summary>
+        /// （全部成功）结束分布式任务
+        /// </summary>
+        /// <param name="globalTraceId"></param>
+        /// <returns></returns>
+        public dynamic SagaEnd(string globalTraceId,bool sagaStartSuccess)
+        {
+            if (string.IsNullOrWhiteSpace(globalTraceId))
+            {
+                return false;
+            }
+            DTransactionManager.Sagas.TryRemove(globalTraceId, out SagaTxs sagaTxs);
+            if (sagaTxs.Success == false|| sagaStartSuccess==false)
+            {
+                Recovery(sagaTxs);
+            }
+            return true;
+        }
+        private void Recovery(SagaTxs sagaTxs)
+        {
+            while (sagaTxs.Sagas.TryPop(out SagaTx tx))
             {
                 try
                 {
@@ -86,7 +117,8 @@ namespace Anno.Plugs.DTransactionService
                     method = tx.recover;
                     response.Add("sagaRlt", tx.sagaRlt);
 
-                    if (response.ContainsKey("TraceId")) {
+                    if (response.ContainsKey("TraceId"))
+                    {
                         response.Remove("TraceId");
                     }
 
@@ -104,17 +136,6 @@ namespace Anno.Plugs.DTransactionService
                     Log.Log.Error(ex, typeof(DTransactionManager));
                 }
             }
-            return true;
-        }
-        /// <summary>
-        /// （全部成功）结束分布式任务
-        /// </summary>
-        /// <param name="globalTraceId"></param>
-        /// <returns></returns>
-        public dynamic SagaEnd(string globalTraceId)
-        {
-            DTransactionManager.Sagas.TryRemove(globalTraceId, out ConcurrentStack<SagaTx> txs);
-            return true;
         }
     }
 }

@@ -16,7 +16,13 @@ namespace Anno.EngineData
         /// </summary>
         public string RecoverMethod { get; set; }
 
+        /// <summary>
+        /// 预估整个任务执行时间长度(默认30秒)
+        /// </summary>
+        public int ExecutionSeconds { get; set; } = 30;
+
         private string GlobalTraceId = "GlobalTraceId";
+
         /*
          * 事务开始前
          */
@@ -25,7 +31,8 @@ namespace Anno.EngineData
             context.Input.TryGetValue(GlobalTraceId, out string globalId);
             Dictionary<string, string> response = new Dictionary<string, string>();
             response.Add("globalTraceId", globalId);
-            response.Add("recover",this.RecoverMethod);
+            response.Add("executionTimeSpan",(ExecutionSeconds*1000).ToString());
+            response.Add("recover", this.RecoverMethod);
             response.Add("sagaInput", JsonConvert.SerializeObject(context.Input));
             context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", "SagaStarted", response);
         }
@@ -41,23 +48,20 @@ namespace Anno.EngineData
          */
         public void OnException(Exception ex, BaseModule context)
         {
-            SagaEnd(context,false);
+            SagaEnd(context, false);
         }
         /// <summary>
         /// 结束通知
         /// </summary>
         /// <param name="context"></param>
         /// <param name="success"></param>
-        private void SagaEnd(BaseModule context,bool success)
+        private void SagaEnd(BaseModule context, bool success)
         {
             context.Input.TryGetValue(GlobalTraceId, out string globalId);
             Dictionary<string, string> response = new Dictionary<string, string>();
             response.Add("globalTraceId", globalId);
-            string action = "SagaEnd";
-            if (success == false) {
-                action = "SagaRecovery";
-            }
-            context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", action, response);
+            response.Add("sagaStartSuccess", success.ToString());
+            context.InvokeProcessor("Anno.Plugs.DTransaction", "DTransaction", "SagaEnd", response);
         }
     }
 }
