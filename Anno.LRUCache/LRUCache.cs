@@ -244,7 +244,10 @@ namespace Anno.LRUCache
                 }
                 catch
                 {
-                    _locker.ExitReadLock();
+                    if (_locker.IsReadLockHeld)
+                    {
+                        _locker.ExitReadLock();
+                    }
                     goto Expire;
                 }
             }, cancelToken.Token);
