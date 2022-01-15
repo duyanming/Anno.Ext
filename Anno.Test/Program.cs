@@ -8,8 +8,8 @@ namespace Anno.Test
        
         static void Main(string[] args)
         {
-            //LruCacheTest.Handle();
-            AnnoRpcTest.Handle();
+            LruCacheTest.Handle();
+            //AnnoRpcTest.Handle();
             Console.ReadLine();
         }
     }

@@ -70,16 +70,22 @@ namespace Anno.LRUCache
                     _linkedList.RemoveLast();
                 }
             }
-            finally { _locker.ExitWriteLock(); }
+            finally
+            {
+                if (_locker.IsWriteLockHeld)
+                {
+                    _locker.ExitWriteLock();
+                }
+            }
         }
         /// <summary>
         /// 获取Value 自定义是否延长 有效期
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        /// <param name="isupdate">true  延长有效期; false 不延长有效期</param>
+        /// <param name="slide">true  延长有效期; false 不延长有效期</param>
         /// <returns></returns>
-        public bool TryGet(TKey key, out TValue value, bool isupdate)
+        public bool TryGet(TKey key, out TValue value, bool slide)
         {
             _locker.EnterUpgradeableReadLock();
             try
@@ -90,14 +96,20 @@ namespace Anno.LRUCache
                     _locker.EnterWriteLock();
                     try
                     {
-                        if (isupdate)
+                        if (slide)
                         {
                             _keyLastVisitTimeDictionary[key] = DateTime.Now;
                         }
                         _linkedList.Remove(key);
                         _linkedList.AddFirst(key);
                     }
-                    finally { _locker.ExitWriteLock(); }
+                    finally
+                    {
+                        if (_locker.IsWriteLockHeld)
+                        {
+                            _locker.ExitWriteLock();
+                        }
+                    }
                 }
                 return b;
             }
@@ -112,8 +124,7 @@ namespace Anno.LRUCache
         /// <returns></returns>
         public bool TryGet(TKey key, out TValue value)
         {
-            var rlt = TryGet(key, out TValue tvalue, true);
-            value = tvalue;
+            var rlt = TryGet(key, out value, true);
             return rlt;
         }
         /// <summary>
@@ -131,7 +142,10 @@ namespace Anno.LRUCache
             }
             finally
             {
-                _locker.ExitWriteLock();
+                if (_locker.IsWriteLockHeld)
+                {
+                    _locker.ExitWriteLock();
+                }
             }
         }
         public bool ContainsKey(TKey key)
@@ -141,7 +155,13 @@ namespace Anno.LRUCache
             {
                 return _dictionary.ContainsKey(key);
             }
-            finally { _locker.ExitReadLock(); }
+            finally
+            {
+                if (_locker.IsReadLockHeld)
+                {
+                    _locker.ExitReadLock();
+                }
+            }
         }
 
         public int Count
@@ -153,7 +173,13 @@ namespace Anno.LRUCache
                 {
                     return _dictionary.Count;
                 }
-                finally { _locker.ExitReadLock(); }
+                finally
+                {
+                    if (_locker.IsReadLockHeld)
+                    {
+                        _locker.ExitReadLock();
+                    }
+                }
             }
         }
 
@@ -184,7 +210,13 @@ namespace Anno.LRUCache
                                 _linkedList.RemoveLast();
                             }
                         }
-                        finally { _locker.ExitWriteLock(); }
+                        finally
+                        {
+                            if (_locker.IsWriteLockHeld)
+                            {
+                                _locker.ExitWriteLock();
+                            }
+                        }
                     }
                 }
                 finally { _locker.ExitUpgradeableReadLock(); }
@@ -200,7 +232,13 @@ namespace Anno.LRUCache
                 {
                     return _dictionary.Keys;
                 }
-                finally { _locker.ExitReadLock(); }
+                finally
+                {
+                    if (_locker.IsReadLockHeld)
+                    {
+                        _locker.ExitReadLock();
+                    }
+                }
             }
         }
 
@@ -213,7 +251,13 @@ namespace Anno.LRUCache
                 {
                     return _dictionary.Values;
                 }
-                finally { _locker.ExitReadLock(); }
+                finally
+                {
+                    if (_locker.IsReadLockHeld)
+                    {
+                        _locker.ExitReadLock();
+                    }
+                }
             }
         }
 
@@ -232,7 +276,8 @@ namespace Anno.LRUCache
                         var now = DateTime.Now;
                         foreach (var key in keys)
                         {
-                            _keyLastVisitTimeDictionary.TryGetValue(key, out DateTime dateTime);
+                            DateTime dateTime;
+                            _keyLastVisitTimeDictionary.TryGetValue(key, out dateTime);
                             if (dateTime != null && (now - dateTime).TotalSeconds > _seconds)
                             {
                                 Remove(key);
