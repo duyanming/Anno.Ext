@@ -3,6 +3,7 @@ using System.Threading;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Anno.LRUCache
 {
@@ -21,11 +22,11 @@ namespace Anno.LRUCache
         int _capacity;
         double _seconds = 60 * 30;//30分钟
         ReaderWriterLockSlim _locker;
-        IDictionary<TKey, TValue> _dictionary;
+        ConcurrentDictionary<TKey, TValue> _dictionary;
         /// <summary>
         /// Key 最后访问时间
         /// </summary>
-        IDictionary<TKey, DateTime> _keyLastVisitTimeDictionary;
+        ConcurrentDictionary<TKey, DateTime> _keyLastVisitTimeDictionary;
         /// <summary>
         /// Key 链表
         /// </summary>
@@ -40,8 +41,8 @@ namespace Anno.LRUCache
         {
             _locker = new ReaderWriterLockSlim();
             _capacity = capacity > 0 ? capacity : DEFAULT_CAPACITY;
-            _dictionary = new Dictionary<TKey, TValue>();
-            _keyLastVisitTimeDictionary = new Dictionary<TKey, DateTime>();
+            _dictionary = new ConcurrentDictionary<TKey, TValue>();
+            _keyLastVisitTimeDictionary = new ConcurrentDictionary<TKey, DateTime>();
             _linkedList = new LinkedList<TKey>();
             cancelToken = new CancellationTokenSource();
             Expire();
@@ -65,8 +66,8 @@ namespace Anno.LRUCache
                 _linkedList.AddFirst(key);
                 if (_linkedList.Count > _capacity)
                 {
-                    _dictionary.Remove(_linkedList.Last.Value);
-                    _keyLastVisitTimeDictionary.Remove(_linkedList.Last.Value);
+                    _dictionary.TryRemove(_linkedList.Last.Value, out TValue tValue);
+                    _keyLastVisitTimeDictionary.TryRemove(_linkedList.Last.Value, out DateTime dateTime);
                     _linkedList.RemoveLast();
                 }
             }
@@ -136,8 +137,8 @@ namespace Anno.LRUCache
             _locker.EnterWriteLock();
             try
             {
-                _dictionary.Remove(key);
-                _keyLastVisitTimeDictionary.Remove(key);
+                _dictionary.TryRemove(key, out TValue tValue);
+                _keyLastVisitTimeDictionary.TryRemove(key, out DateTime dateTime);
                 _linkedList.Remove(key);
             }
             finally
@@ -270,20 +271,7 @@ namespace Anno.LRUCache
                 {
                     while (cancelToken.Token.IsCancellationRequested == false)
                     {
-                        _locker.EnterReadLock();
-                        var keys = _keyLastVisitTimeDictionary.Keys.ToList();
-                        _locker.ExitReadLock();
-                        var now = DateTime.Now;
-                        foreach (var key in keys)
-                        {
-                            DateTime dateTime;
-                            _keyLastVisitTimeDictionary.TryGetValue(key, out dateTime);
-                            if (dateTime != null && (now - dateTime).TotalSeconds > _seconds)
-                            {
-                                Remove(key);
-
-                            }
-                        }
+                        CacheClear().Wait();
                         Thread.Sleep(5000);
                     }
                 }
@@ -296,6 +284,25 @@ namespace Anno.LRUCache
                     goto Expire;
                 }
             }, cancelToken.Token);
+        }
+
+        private Task CacheClear()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var keys = _keyLastVisitTimeDictionary.Keys.ToList();
+                var now = DateTime.Now;
+                foreach (var key in keys)
+                {
+                    DateTime dateTime;
+                    _keyLastVisitTimeDictionary.TryGetValue(key, out dateTime);
+                    if (dateTime != null && (now - dateTime).TotalSeconds > _seconds)
+                    {
+                        Remove(key);
+
+                    }
+                }
+            });
         }
 
         private void Dispose(bool disposing)
