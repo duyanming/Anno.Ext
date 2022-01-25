@@ -22,11 +22,7 @@ namespace Anno.LRUCache
         int _capacity;
         double _seconds = 60 * 30;//30分钟
         ReaderWriterLockSlim _locker;
-        ConcurrentDictionary<TKey, TValue> _dictionary;
-        /// <summary>
-        /// Key 最后访问时间
-        /// </summary>
-        ConcurrentDictionary<TKey, DateTime> _keyLastVisitTimeDictionary;
+        ConcurrentDictionary<TKey, LruCacheObj<TKey, TValue>> _dictionary;
         /// <summary>
         /// Key 链表
         /// </summary>
@@ -41,8 +37,7 @@ namespace Anno.LRUCache
         {
             _locker = new ReaderWriterLockSlim();
             _capacity = capacity > 0 ? capacity : DEFAULT_CAPACITY;
-            _dictionary = new ConcurrentDictionary<TKey, TValue>();
-            _keyLastVisitTimeDictionary = new ConcurrentDictionary<TKey, DateTime>();
+            _dictionary = new ConcurrentDictionary<TKey, LruCacheObj<TKey, TValue>>();
             _linkedList = new LinkedList<TKey>();
             cancelToken = new CancellationTokenSource();
             Expire();
@@ -60,14 +55,12 @@ namespace Anno.LRUCache
             _locker.EnterWriteLock();
             try
             {
-                _dictionary[key] = value;
-                _keyLastVisitTimeDictionary[key] = DateTime.Now;
+                _dictionary[key] = new LruCacheObj<TKey, TValue>(key, value);
                 _linkedList.Remove(key);
                 _linkedList.AddFirst(key);
                 if (_linkedList.Count > _capacity)
                 {
-                    _dictionary.TryRemove(_linkedList.Last.Value, out TValue tValue);
-                    _keyLastVisitTimeDictionary.TryRemove(_linkedList.Last.Value, out DateTime dateTime);
+                    _dictionary.TryRemove(_linkedList.Last.Value, out LruCacheObj<TKey, TValue> tValue);
                     _linkedList.RemoveLast();
                 }
             }
@@ -88,34 +81,42 @@ namespace Anno.LRUCache
         /// <returns></returns>
         public bool TryGet(TKey key, out TValue value, bool slide)
         {
-            _locker.EnterUpgradeableReadLock();
-            try
+            LruCacheObj<TKey, TValue> cacheObj;
+            bool b = _dictionary.TryGetValue(key, out cacheObj);
+            if (b)
             {
-                bool b = _dictionary.TryGetValue(key, out value);
-                if (b)
+                _locker.EnterWriteLock();
+                try
                 {
-                    _locker.EnterWriteLock();
-                    try
+                    if (slide)
                     {
-                        if (slide)
-                        {
-                            _keyLastVisitTimeDictionary[key] = DateTime.Now;
-                        }
-                        _linkedList.Remove(key);
-                        _linkedList.AddFirst(key);
+                        cacheObj.LastVisitTime = DateTime.Now;
                     }
-                    finally
+                    _linkedList.Remove(key);
+                    _linkedList.AddFirst(key);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    if (_locker.IsWriteLockHeld)
                     {
-                        if (_locker.IsWriteLockHeld)
-                        {
-                            _locker.ExitWriteLock();
-                        }
+                        _locker.ExitWriteLock();
                     }
                 }
-                return b;
             }
-            catch { throw; }
-            finally { _locker.ExitUpgradeableReadLock(); }
+            if (cacheObj != null)
+            {
+                value = cacheObj.CacheObjValue;
+            }
+            else
+            {
+                value = default(TValue);
+            }
+            return b;
+
         }
         /// <summary>
         /// 获取Value 并延长 有效期
@@ -137,8 +138,7 @@ namespace Anno.LRUCache
             _locker.EnterWriteLock();
             try
             {
-                _dictionary.TryRemove(key, out TValue tValue);
-                _keyLastVisitTimeDictionary.TryRemove(key, out DateTime dateTime);
+                _dictionary.TryRemove(key, out LruCacheObj<TKey, TValue> tValue);
                 _linkedList.Remove(key);
             }
             finally
@@ -151,36 +151,14 @@ namespace Anno.LRUCache
         }
         public bool ContainsKey(TKey key)
         {
-            _locker.EnterReadLock();
-            try
-            {
-                return _dictionary.ContainsKey(key);
-            }
-            finally
-            {
-                if (_locker.IsReadLockHeld)
-                {
-                    _locker.ExitReadLock();
-                }
-            }
+            return _dictionary.ContainsKey(key);
         }
 
         public int Count
         {
             get
             {
-                _locker.EnterReadLock();
-                try
-                {
-                    return _dictionary.Count;
-                }
-                finally
-                {
-                    if (_locker.IsReadLockHeld)
-                    {
-                        _locker.ExitReadLock();
-                    }
-                }
+                return _dictionary.Count;
             }
         }
 
@@ -188,79 +166,36 @@ namespace Anno.LRUCache
         {
             get
             {
-                _locker.EnterReadLock();
-                try
-                {
-                    return _capacity;
-                }
-                finally { _locker.ExitReadLock(); }
+                return _capacity;
             }
             set
             {
-                _locker.EnterUpgradeableReadLock();
-                try
+                if (value > 0 && _capacity != value)
                 {
-                    if (value > 0 && _capacity != value)
+                    _locker.EnterWriteLock();
+                    try
                     {
-                        _locker.EnterWriteLock();
-                        try
+                        _capacity = value;
+                        while (_linkedList.Count > _capacity)
                         {
-                            _capacity = value;
-                            while (_linkedList.Count > _capacity)
-                            {
-                                _linkedList.RemoveLast();
-                            }
-                        }
-                        finally
-                        {
-                            if (_locker.IsWriteLockHeld)
-                            {
-                                _locker.ExitWriteLock();
-                            }
+                            _dictionary.TryRemove(_linkedList.Last.Value, out LruCacheObj<TKey, TValue> tValue);
+                            _linkedList.RemoveLast();
                         }
                     }
-                }
-                finally { _locker.ExitUpgradeableReadLock(); }
-            }
-        }
-
-        public ICollection<TKey> Keys
-        {
-            get
-            {
-                _locker.EnterReadLock();
-                try
-                {
-                    return _dictionary.Keys;
-                }
-                finally
-                {
-                    if (_locker.IsReadLockHeld)
+                    finally
                     {
-                        _locker.ExitReadLock();
+                        if (_locker.IsWriteLockHeld)
+                        {
+                            _locker.ExitWriteLock();
+                        }
                     }
                 }
             }
         }
 
-        public ICollection<TValue> Values
-        {
-            get
-            {
-                _locker.EnterReadLock();
-                try
-                {
-                    return _dictionary.Values;
-                }
-                finally
-                {
-                    if (_locker.IsReadLockHeld)
-                    {
-                        _locker.ExitReadLock();
-                    }
-                }
-            }
-        }
+        public ICollection<TKey> Keys => _dictionary.Keys;
+
+        public ICollection<TValue> Values => _dictionary.Values.Select(it => it.CacheObjValue).ToList();
 
         private void Expire()
         {
@@ -271,38 +206,44 @@ namespace Anno.LRUCache
                 {
                     while (cancelToken.Token.IsCancellationRequested == false)
                     {
-                        CacheClear().Wait();
+                        CacheClear();
                         Thread.Sleep(5000);
                     }
                 }
                 catch
                 {
-                    if (_locker.IsReadLockHeld)
-                    {
-                        _locker.ExitReadLock();
-                    }
                     goto Expire;
                 }
-            }, cancelToken.Token);
+            }, TaskCreationOptions.LongRunning);
         }
 
-        private Task CacheClear()
+        private void CacheClear()
         {
-            return Task.Factory.StartNew(() =>
+            var now = DateTime.Now;
+            var objs = _dictionary.Values.Where(it => (now - it.LastVisitTime).TotalSeconds > _seconds).ToList();
+            if (objs.Count > 0)
             {
-                var keys = _keyLastVisitTimeDictionary.Keys.ToList();
-                var now = DateTime.Now;
-                foreach (var key in keys)
+                try
                 {
-                    DateTime dateTime;
-                    _keyLastVisitTimeDictionary.TryGetValue(key, out dateTime);
-                    if (dateTime != null && (now - dateTime).TotalSeconds > _seconds)
+                    if (_locker.TryEnterWriteLock(-1))
                     {
-                        Remove(key);
+                        foreach (var obj in objs)
+                        {
+                            LruCacheObj<TKey, TValue> cacheObj;
+                            _dictionary.TryRemove(obj.CacheObjKey, out cacheObj);
+                            _linkedList.Remove(obj.CacheObjKey);
+                        }
+                    }
 
+                }
+                finally
+                {
+                    if (_locker.IsWriteLockHeld)
+                    {
+                        _locker.ExitWriteLock();
                     }
                 }
-            });
+            }
         }
 
         private void Dispose(bool disposing)
@@ -312,6 +253,7 @@ namespace Anno.LRUCache
                 if (disposing)
                 {
                     cancelToken.Cancel();
+                    _locker.Dispose();
                 }
                 disposed = true;
             }
