@@ -27,6 +27,7 @@ namespace Anno.LRUCache
         /// Key 链表
         /// </summary>
         public LinkedList<TKey> _linkedList;
+        private Thread expireTask;
         public LRUCache() : this(DEFAULT_CAPACITY) { }
         ~LRUCache()
         {
@@ -199,7 +200,7 @@ namespace Anno.LRUCache
 
         private void Expire()
         {
-            Task.Factory.StartNew(() =>
+            expireTask = new Thread(() =>
             {
             Expire:
                 try
@@ -214,7 +215,10 @@ namespace Anno.LRUCache
                 {
                     goto Expire;
                 }
-            }, TaskCreationOptions.LongRunning);
+            });
+            expireTask.Name = "Lru_expireTask";
+            expireTask.IsBackground = true;
+            expireTask.Start();
         }
 
         private void CacheClear()
