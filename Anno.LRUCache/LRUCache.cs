@@ -211,7 +211,11 @@ namespace Anno.LRUCache
                         Thread.Sleep(5000);
                     }
                 }
-                catch
+                catch (ThreadAbortException)
+                {
+                    return;
+                }
+                catch (Exception)
                 {
                     goto Expire;
                 }
