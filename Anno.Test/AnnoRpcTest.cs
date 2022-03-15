@@ -34,11 +34,11 @@ namespace Anno.Test
             stopWatch.Stop();
             Console.WriteLine($"AnnoProxyBuilder.GetService2：{stopWatch.Elapsed}");
 
-            var helloWorldService = AnnoProxyBuilder.GetService<IHelloWorldService>();
+            //var helloWorldService = AnnoProxyBuilder.GetService<IHelloWorldService>();
 
             for (int i = 0; i < 5; i++)
             {
-                /*
+
 
                 var rlt1 = taskService.ServiceInstances();
 
@@ -55,9 +55,9 @@ namespace Anno.Test
                 Console.WriteLine("DynamicReturnClass:" + taskService.DynamicReturnClass());
                 Console.WriteLine("DynamicReturnClassTask:" + taskService.DynamicReturnClassTask().Result);
 
-                var rlt=  taskService.SayHi(null);
-                */
-                Console.WriteLine("SayHello-AnnoGrpc:" + helloWorldService.SayHello("AnnoGrpc",6));
+                var rlt = taskService.SayHi(null);
+
+                //Console.WriteLine("SayHello-AnnoGrpc:" + helloWorldService.SayHello("AnnoGrpc",6));
             }
         }
         static void Init()
@@ -68,7 +68,7 @@ namespace Anno.Test
             //stopWatch.Stop();
             //Console.WriteLine($"AnnoProxyBuilder.Init(false)：{stopWatch.Elapsed}");
             DefaultConfigManager.SetDefaultConnectionPool(1000, Environment.ProcessorCount * 2, 50);
-            DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 6660, false);
+            DefaultConfigManager.SetDefaultConfiguration("RpcTest", "127.0.0.1", 7010, false);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Anno.Rpc.Client.DynamicProxy
     public class AnnoRpcInterceptor : IInterceptor
     {
         private static Type _taskType = typeof(Task);
-        private static Type rltObjectType = Type.GetType("Anno.EngineData.ActionResult`1, Anno.EngineData").MakeGenericType(typeof(object));
+        private static Type rltObjectType = typeof(Anno.EngineData.ActionResult<>);
         public void Intercept(IInvocation invocation)
         {
             Dictionary<string, string> input = new Dictionary<string, string>();
@@ -105,8 +105,9 @@ namespace Anno.Rpc.Client.DynamicProxy
                     }
                     throw new AnnoRpcException(errorMsg);
                 }
-                Type realReturnType = null;
+
                 bool isTask = false;
+                Type realReturnType;
                 if (invocation.Method.ReturnType.BaseType != null && invocation.Method.ReturnType.BaseType.FullName.Equals("System.Threading.Tasks.Task"))
                 {
                     var generics = invocation.Method.ReturnType.GenericTypeArguments;
@@ -127,18 +128,18 @@ namespace Anno.Rpc.Client.DynamicProxy
 
                 if (realReturnType == _taskType)
                 {
-                    invocation.ReturnValue = Task.CompletedTask;
+                    invocation.ReturnValue = Task.FromResult(realReturnType);
                 }
                 else
                 {
                     dynamic returnValue;
-                    if (typeof(EngineData.IActionResult).IsAssignableFrom(realReturnType))
+                    if (typeof(Anno.EngineData.IActionResult).IsAssignableFrom(realReturnType))
                     {
                         returnValue = JsonConvert.DeserializeObject(rltStr, type: realReturnType);
                     }
                     else
                     {
-                        var rltType = Type.GetType("Anno.EngineData.ActionResult`1, Anno.EngineData").MakeGenericType(realReturnType);
+                        var rltType = typeof(Anno.EngineData.ActionResult<>).MakeGenericType(realReturnType);
                         var data = JsonConvert.DeserializeObject(rltStr, rltType) as dynamic;
                         if (data.Status == false && data.OutputData == null && !string.IsNullOrWhiteSpace(data.Msg))
                         {

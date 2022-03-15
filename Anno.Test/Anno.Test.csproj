@@ -6,13 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="1.6.1.5" />
+    <PackageReference Include="Anno.EngineData" Version="1.7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Anno.LRUCache\Anno.LRUCache.csproj" />
+    <ProjectReference Include="..\Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj" />
     <!--<ProjectReference Include="..\Anno.Rpc.Client.DynamicProxy\Anno.Rpc.Client.DynamicProxy.csproj" />-->
-    <ProjectReference Include="..\Anno.Rpc.Client.DynamicProxyGrpc\Anno.Rpc.Client.DynamicProxyGrpc.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

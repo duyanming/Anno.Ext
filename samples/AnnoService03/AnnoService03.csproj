@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="1.6.1.5" />
-    <PackageReference Include="Anno.Rpc.Server" Version="1.6.1.5" />
+    <PackageReference Include="Anno.EngineData" Version="1.7.0.1" />
+    <PackageReference Include="Anno.Rpc.Server" Version="1.7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +18,13 @@
     <None Update="Anno.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

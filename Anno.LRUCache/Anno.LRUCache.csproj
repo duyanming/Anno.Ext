@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(DevTargetFramework);net45;net451;net40</TargetFrameworks>
+    <TargetFrameworks>$(DevTargetFramework)</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Du yanming</Authors>
     <Company>Du yanming</Company>
@@ -9,4 +9,11 @@
     <Description>Cache</Description>
     <PackageId>Anno.LRUCache</PackageId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

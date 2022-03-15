@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
     <DeveloperBuildCoreTfms>net6.0</DeveloperBuildCoreTfms>
-    <DevTargetFramework>netstandard2.0;netstandard2.1;net461</DevTargetFramework>
-    <Version>1.6.1.6</Version>
+    <DevTargetFramework>netstandard2.0;netstandard2.1;net461;net45;net451</DevTargetFramework>
+    <Version>1.7.0.1</Version>
     <Authors>Du yanming</Authors>
     <Company>Du yanming</Company>
     <PackageIcon>logo.png</PackageIcon>
@@ -25,7 +25,7 @@
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
+	  <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
