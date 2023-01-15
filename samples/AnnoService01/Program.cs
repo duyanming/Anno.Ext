@@ -13,6 +13,9 @@ namespace AnnoService01
     using Anno.Rpc.Server;
     using System.Collections.Generic;
     using Anno.Rpc.Storage;
+    using Microsoft.Extensions.DependencyInjection;
+    using TitaService;
+
     class Program
     {
         static void Main(string[] args)
@@ -43,8 +46,9 @@ namespace AnnoService01
                  * Install-Package Anno.Rpc.ServerGrpc -Version 1.0.1.5 Grpc
                  * 此处为 Thrift
                  */
-                var autofac = IocLoader.GetAutoFacContainerBuilder();
-                autofac.RegisterType(typeof(RpcConnectorImpl)).As(typeof(IRpcConnector)).SingleInstance();
+                var services = IocLoader.GetServiceDescriptors();
+                services.AddSingleton(typeof(IRpcConnector),typeof(RpcConnectorImpl));
+                services.AddScoped(typeof(ITitaService),typeof(TitaServiceImpl));
             }
             , () =>//服务启动后的回调方法
             {
@@ -52,7 +56,7 @@ namespace AnnoService01
                  * 服务Api文档写入注册中心
                  */
                 Bootstrap.ApiDoc();
-            });
+            },IocType.DependencyInjection);
         }
     }
 }

@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="2.0.0" />
-    <PackageReference Include="Anno.Rpc.ClientGrpc" Version="2.0.0" />
+    <PackageReference Include="Anno.EngineData" Version="2.1.0.1" />
+    <PackageReference Include="Anno.Rpc.ClientGrpc" Version="2.1.0.1" />
     <PackageReference Include="Castle.Core" Version="4.4.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <Compile Include="..\Anno.Rpc.Client.DynamicProxy\*.cs" />

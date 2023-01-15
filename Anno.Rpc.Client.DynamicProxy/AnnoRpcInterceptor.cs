@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 namespace Anno.Rpc.Client.DynamicProxy
 {
     using Anno.Rpc.Client;
+    using System.Numerics;
+
     public class AnnoRpcInterceptor : IInterceptor
     {
         private static Type _taskType = typeof(Task);
@@ -128,7 +130,7 @@ namespace Anno.Rpc.Client.DynamicProxy
 
                 if (realReturnType == _taskType)
                 {
-                    invocation.ReturnValue = Task.FromResult(realReturnType);
+                    invocation.ReturnValue = Task.Factory.StartNew(() => { });
                 }
                 else
                 {
@@ -149,8 +151,55 @@ namespace Anno.Rpc.Client.DynamicProxy
                         {
                             returnValue = data.OutputData;
                         }
-                    }
 
+                        if (returnValue == null && isTask)
+                        {
+                            if (realReturnType == typeof(object)) { invocation.ReturnValue = Task.FromResult<object>(default); return; }
+
+                            if (realReturnType == typeof(string)) { invocation.ReturnValue = Task.FromResult<string>(default); return; }
+                            if (realReturnType == typeof(char[])) { invocation.ReturnValue = Task.FromResult<char[]>(default); return; }
+                            if (realReturnType == typeof(char)) { invocation.ReturnValue = Task.FromResult<char>(default); return; }
+                            if (realReturnType == typeof(bool)) { invocation.ReturnValue = Task.FromResult<bool>(default); return; }
+                            if (realReturnType == typeof(bool?)) { invocation.ReturnValue = Task.FromResult<bool?>(default); return; }
+                            if (realReturnType == typeof(byte)) { invocation.ReturnValue = Task.FromResult<byte>(default); return; }
+                            if (realReturnType == typeof(byte?)) { invocation.ReturnValue = Task.FromResult<byte?>(default); return; }
+                            if (realReturnType == typeof(decimal)) { invocation.ReturnValue = Task.FromResult<decimal>(default); return; }
+                            if (realReturnType == typeof(decimal?)) { invocation.ReturnValue = Task.FromResult<decimal?>(default); return; }
+                            if (realReturnType == typeof(double)) { invocation.ReturnValue = Task.FromResult<double>(default); return; }
+                            if (realReturnType == typeof(double?)) { invocation.ReturnValue = Task.FromResult<double?>(default); return; }
+                            if (realReturnType == typeof(float)) { invocation.ReturnValue = Task.FromResult<float>(default); return; }
+                            if (realReturnType == typeof(float?)) { invocation.ReturnValue = Task.FromResult<float?>(default); return; }
+                            if (realReturnType == typeof(int)) { invocation.ReturnValue = Task.FromResult<int>(default); return; }
+                            if (realReturnType == typeof(int?)) { invocation.ReturnValue = Task.FromResult<int?>(default); return; }
+                            if (realReturnType == typeof(long)) { invocation.ReturnValue = Task.FromResult<long>(default); return; }
+                            if (realReturnType == typeof(long?)) { invocation.ReturnValue = Task.FromResult<long?>(default); return; }
+                            if (realReturnType == typeof(sbyte)) { invocation.ReturnValue = Task.FromResult<sbyte>(default); return; }
+                            if (realReturnType == typeof(sbyte?)) { invocation.ReturnValue = Task.FromResult<sbyte?>(default); return; }
+                            if (realReturnType == typeof(short)) { invocation.ReturnValue = Task.FromResult<short>(default); return; }
+                            if (realReturnType == typeof(short?)) { invocation.ReturnValue = Task.FromResult<short?>(default); return; }
+                            if (realReturnType == typeof(uint)) { invocation.ReturnValue = Task.FromResult<uint>(default); return; }
+                            if (realReturnType == typeof(uint?)) { invocation.ReturnValue = Task.FromResult<uint?>(default); return; }
+                            if (realReturnType == typeof(ulong)) { invocation.ReturnValue = Task.FromResult<ulong>(default); return; }
+                            if (realReturnType == typeof(ulong?)) { invocation.ReturnValue = Task.FromResult<ulong?>(default); return; }
+                            if (realReturnType == typeof(ushort)) { invocation.ReturnValue = Task.FromResult<ushort>(default); return; }
+                            if (realReturnType == typeof(ushort?)) { invocation.ReturnValue = Task.FromResult<ushort?>(default); return; }
+                            if (realReturnType == typeof(DateTime)) { invocation.ReturnValue = Task.FromResult<DateTime>(default); return; }
+                            if (realReturnType == typeof(DateTime?)) { invocation.ReturnValue = Task.FromResult<DateTime?>(default); return; }
+                            if (realReturnType == typeof(DateTimeOffset)) { invocation.ReturnValue = Task.FromResult<DateTimeOffset>(default); return; }
+                            if (realReturnType == typeof(DateTimeOffset?)) { invocation.ReturnValue = Task.FromResult<DateTimeOffset?>(default); return; }
+                            if (realReturnType == typeof(TimeSpan)) { invocation.ReturnValue = Task.FromResult<TimeSpan>(default); return; }
+                            if (realReturnType == typeof(TimeSpan?)) { invocation.ReturnValue = Task.FromResult<TimeSpan?>(default); return; }
+                            if (realReturnType == typeof(Guid)) { invocation.ReturnValue = Task.FromResult<Guid>(default); return; }
+                            if (realReturnType == typeof(Guid?)) { invocation.ReturnValue = Task.FromResult<Guid?>(default); return; }
+                            if (realReturnType == typeof(BigInteger)) { invocation.ReturnValue = Task.FromResult<BigInteger>(default); return; }
+                            if (realReturnType == typeof(BigInteger?)) { invocation.ReturnValue = Task.FromResult<BigInteger?>(default); return; }
+
+                            returnValue = JsonConvert.DeserializeObject("{}", type: realReturnType);
+                            var returnValueTask = Task.FromResult(returnValue);
+                            invocation.ReturnValue = returnValueTask;
+                            return;
+                        }
+                    }
                     invocation.ReturnValue = isTask ? Task.FromResult(returnValue) : returnValue;
                 }
             }

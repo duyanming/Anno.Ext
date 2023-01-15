@@ -1,16 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="2.0.0" />
-    <PackageReference Include="Anno.Rpc.Server" Version="2.0.0" />
+    <PackageReference Include="Anno.EngineData" Version="2.1.0.1" />
+    <PackageReference Include="Anno.Rpc.Server" Version="2.1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Packages\Anno.Plugs.TitaService\Anno.Plugs.TitaService.csproj" />
     <ProjectReference Include="..\Packages\Anno.Plugs.Tx1Service\Anno.Plugs.Tx1Service.csproj" />
   </ItemGroup>
   
