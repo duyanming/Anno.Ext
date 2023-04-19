@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Anno.EngineData" Version="2.1.0.1" />
-    <PackageReference Include="Anno.Rpc.Client" Version="2.1.0.1" />
+    <PackageReference Include="Anno.EngineData" Version="2.1.0.6" />
+    <PackageReference Include="Anno.Rpc.Client" Version="2.1.0.6" />
     <PackageReference Include="Castle.Core" Version="4.4.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>

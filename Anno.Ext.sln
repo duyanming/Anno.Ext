@@ -52,9 +52,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTransactionManagerService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.ConsoleAppFx", "Anno.ConsoleAppFx\Anno.ConsoleAppFx.csproj", "{1A8B5A74-0AFB-4201-8EB9-1C95DBF312D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anno.Plugs.TitaService", "samples\Packages\Anno.Plugs.TitaService\Anno.Plugs.TitaService.csproj", "{E7212F46-7EE1-4E1E-A51A-2AF0B4E45812}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anno.Plugs.TitaService", "samples\Packages\Anno.Plugs.TitaService\Anno.Plugs.TitaService.csproj", "{E7212F46-7EE1-4E1E-A51A-2AF0B4E45812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TitaService", "samples\Packages\TitaService\TitaService.csproj", "{3F874F93-6608-4BEC-B33E-A9577D239F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TitaService", "samples\Packages\TitaService\TitaService.csproj", "{3F874F93-6608-4BEC-B33E-A9577D239F2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
