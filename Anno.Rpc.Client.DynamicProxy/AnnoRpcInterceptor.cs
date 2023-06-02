@@ -87,26 +87,12 @@ namespace Anno.Rpc.Client.DynamicProxy
             if (invocation.Method.ReturnType != typeof(void))
             {
                 var rltStr = Connector.BrokerDns(input);
-                if (rltStr.IndexOf("tatus\":false") > 0)
-                {
-                    string errorMsg = "服务端未知错误";
-                    try
-                    {
-                        var errorData = JsonConvert.DeserializeObject(rltStr, rltObjectType) as dynamic;
-                        errorMsg = errorData.Msg;
-                    }
-                    catch
-                    {
-                        int errorMsgLength = rltStr.IndexOf("\",\"Status\"");
-                        if (errorMsgLength > 11)
-                        {
-                            errorMsg = rltStr.Substring(8, errorMsgLength - 8);
-                        }
-                    }
-                    throw new AnnoRpcException(errorMsg);
-                }
-
-                bool isTask = false;
+				var rlt = JsonConvert.DeserializeObject<ActionResultLogCollector>(rltStr);
+				if (!rlt.Status)
+				{
+					throw new AnnoRpcException(rlt.Msg);
+				}
+				bool isTask = false;
                 Type realReturnType;
                 if (invocation.Method.ReturnType.BaseType != null && invocation.Method.ReturnType.BaseType.FullName.Equals("System.Threading.Tasks.Task"))
                 {
@@ -160,4 +146,14 @@ namespace Anno.Rpc.Client.DynamicProxy
             }
         }
     }
+	class ActionResultLogCollector
+	{ /// <summary>
+	  /// 状态
+	  /// </summary>
+		public Boolean Status { get; set; }
+		/// <summary>
+		/// 消息
+		/// </summary>
+		public string Msg { get; set; }
+	}
 }
