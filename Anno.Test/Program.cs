@@ -10,7 +10,7 @@ namespace Anno.Test
         {
             //LruCacheTest2.Handle();
             //LruCacheTest.Handle();
-            AnnoRpcTest.Handle();
+            AnnoRpcTest.Handle1();
             Console.ReadLine();
         }
     }

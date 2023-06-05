@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <DeveloperBuildCoreTfms>net6.0</DeveloperBuildCoreTfms>
+    <DeveloperBuildCoreTfms>net7.0</DeveloperBuildCoreTfms>
     <DevTargetFramework>netstandard2.0;net461;net45</DevTargetFramework>
     <Version>2.1.0.6</Version>
     <Authors>Du yanming</Authors>

@@ -60,6 +60,18 @@ namespace Anno.Test
                 //Console.WriteLine("SayHello-AnnoGrpc:" + helloWorldService.SayHello("AnnoGrpc",6));
             }
         }
+
+        public static void Handle1()
+        {
+            Init();
+            var titaService = AnnoProxyBuilder.GetService<ITitaService>();
+            var rlt1 = titaService.GetNoticeMsgAsync("1");
+            var rlt1_2 = titaService.GetNoticeMsgAsync("1");
+            var rlt2 = titaService.GetNoticeMsgAsync("2");
+            Console.WriteLine(rlt1.Result.Message);
+            Console.WriteLine(rlt1_2.Result.Message);
+            Console.WriteLine(rlt2?.Result.Message);
+        }
         static void Init()
         {
             //Stopwatch stopWatch = new Stopwatch();
